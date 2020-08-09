@@ -6,6 +6,16 @@ class PageController
 {
     public function index()
     {
-        echo 'This is PageController - index';
+        require_once(__DIR__ . '/../Templates/index.php');
+    }
+
+    public function about()
+    {
+        require_once(__DIR__ . '/../Templates/about.php');
+    }
+
+    public function contact()
+    {
+        require_once(__DIR__ . '/../Templates/contact.php');
     }
 }

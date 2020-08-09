@@ -6,6 +6,6 @@ class ErrorController
 {
     public function error()
     {
-        echo 'This is ErrorController - Error';
+        require_once(__DIR__ . '/../Templates/error.php');
     }
 }

@@ -2,14 +2,13 @@
 
 namespace App\Core;
 
-class JsonParser
+class Config
 {
-    protected $params = [];
+    private $params = [];
 
     public function __construct($filePath)
     {
-        $strJsonFileContents = file_get_contents($filePath);
-        $this->params = json_decode($strJsonFileContents, true);
+        $this->params = include($filePath);
     }
 
     public function has($paramKey): bool

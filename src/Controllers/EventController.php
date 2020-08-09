@@ -16,6 +16,6 @@ class EventController
 
     public function test2($name1, $id, $name2)
     {
-        echo 'This is event: <br>' . $name1 . '<br>' . $id . '<br>' . $name2;
+        require_once(__DIR__ . '/../Templates/Events/show.php');
     }
 }

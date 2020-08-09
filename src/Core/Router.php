@@ -13,14 +13,10 @@ class Router
         'name' => '\w+'
     ];
 
-    public function saveGetRoutes($uri, $controller)
+    public function __construct($get, $post)
     {
-        $this->getRoutes[$uri] = $controller;
-    }
-
-    public function savePostRoutes($uri, $controller)
-    {
-        $this->postRoutes[$uri] = $controller;
+        $this->getRoutes = $get;
+        $this->postRoutes = $post;
     }
 
     public function route(Request $request)
