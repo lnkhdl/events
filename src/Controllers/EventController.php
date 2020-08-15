@@ -2,20 +2,16 @@
 
 namespace App\Controllers;
 
-class EventController
+class EventController extends Controller
 {
-    public function show($id)
+    public function test($name1, $id, $name2)
     {
-        echo 'This is event ID: ' . $id;
-    }
-    
-    public function test($name1, $name2)
-    {
-        echo 'This is event: ' . $name1 . ' and ' . $name2;
-    }
+        $data = [
+            'name1' => $name1,
+            'id' => $id,
+            'name2' => $name2
+        ];
 
-    public function test2($name1, $id, $name2)
-    {
-        require_once(__DIR__ . '/../Templates/Events/show.php');
+        $this->view->render('events/show', $data);
     }
 }

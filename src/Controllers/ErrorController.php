@@ -2,10 +2,10 @@
 
 namespace App\Controllers;
 
-class ErrorController
+class ErrorController extends Controller
 {
     public function error()
     {
-        require_once(__DIR__ . '/../Templates/error.php');
+        $this->view->render('error');
     }
 }

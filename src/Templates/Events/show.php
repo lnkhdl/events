@@ -5,11 +5,11 @@
 
 <h3 style="color: red">Show events</h3>
 
-<p><?= $name1 ?></p>
+<p><?= $data['name1'] ?></p>
 
-<p><?= $id ?></p>
+<p><?= $data['id'] ?></p>
 
-<p><?= $name2 ?></p>
+<p><?= $data['name2'] ?></p>
 
 
 <?php 

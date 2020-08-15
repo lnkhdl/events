@@ -12,11 +12,13 @@ class Router
         'id' => '\d+',
         'name' => '\w+'
     ];
+    protected $di;
 
-    public function __construct($get, $post)
+    public function __construct($get, $post, $di)
     {
         $this->getRoutes = $get;
         $this->postRoutes = $post;
+        $this->di = $di;
     }
 
     public function route(Request $request)
@@ -35,7 +37,7 @@ class Router
             }
         }
 
-        return call_user_func(array(new ErrorController(), 'Error'));
+        return call_user_func(array(new ErrorController($this->di, $request), 'Error'));
     }
 
     public function getUriRegex($uri): string
@@ -66,7 +68,7 @@ class Router
     public function callController($request, $route, $controller, $method): void
     {
         $controller = '\\App\\Controllers\\' . $controller;
-        $controller = new $controller();
+        $controller = new $controller($this->di, $request);
 
         $params = $this->getParams($request->getPath(), $route);
 

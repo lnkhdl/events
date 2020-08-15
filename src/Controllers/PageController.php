@@ -2,20 +2,20 @@
 
 namespace App\Controllers;
 
-class PageController
+class PageController extends Controller
 {
     public function index()
     {
-        require_once(__DIR__ . '/../Templates/index.php');
+        $this->view->render('index');
     }
 
     public function about()
     {
-        require_once(__DIR__ . '/../Templates/about.php');
+        $this->view->render('about');
     }
 
     public function contact()
     {
-        require_once(__DIR__ . '/../Templates/contact.php');
+        $this->view->render('contact');
     }
 }

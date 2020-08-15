@@ -1,1 +1,1 @@
-<h1>Events App</h1>
+<h1><?= $this->config->get('APP_NAME') ?></h1>
