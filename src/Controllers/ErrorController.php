@@ -6,6 +6,6 @@ class ErrorController extends Controller
 {
     public function error()
     {
-        $this->view->render('error');
+        return $this->view->render('error');
     }
 }

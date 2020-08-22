@@ -13,8 +13,12 @@ class View
         $this->config = $di->get('Config');
     }
 
-    public function render($template, $data = []): void
+    public function render($template, $data = [], $errors = []): void
     {
+        foreach ($data as $key => $value) {
+            $data[$key] = htmlentities($value, ENT_QUOTES);
+        }
+
         $template = str_replace('­/', $this->config->get('DS'), $template);
         require $this->config->get('TEMPLATE_DIR') . $template . '.php';
     }
