@@ -19,6 +19,7 @@ abstract class Validator
     {
         foreach ($this->fieldsDetails as $name => $rules)
         {
+            // Put exception here in case the file name doesnt exist, e.g. date is in HTML form but is not in EventValidator
             $this->fields[$name] = new Field($name, $data[$name], $rules);
         }
     }
@@ -41,11 +42,11 @@ abstract class Validator
         foreach ($this->fields as $field)
         {
             if (!empty($field->errors)) {
-                return false;
+                return true;
             }
         }
 
-        return true;
+        return false;
     }
 
     public function getErrors(): array
