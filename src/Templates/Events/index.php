@@ -5,6 +5,14 @@
 
 <h3 style="color: red">Events - Index</h3>
 
+<?php
+    session_start();
+    if (!empty($_SESSION['success'])) {
+        echo '<div style="color: green; padding-top: 10px; padding-bottom: 10px;"><b>! ! !' . $_SESSION['success'] . '! ! !</></div>';
+        unset($_SESSION['success']);
+    }
+?>
+
 <?php foreach ($data as $d): ?>
     <hr>
     <table>

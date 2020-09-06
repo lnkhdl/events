@@ -8,26 +8,26 @@ class Router
 {
     public $getRoutes = array();
     public $postRoutes = array();
-    protected $regexTypes = [
+    public $putRoutes = array();
+    public $deleteRoutes = array();
+    private $regexTypes = [
         'id' => '\d+',
         'name' => '\w+'
     ];
-    protected $di;
+    private $di;
 
-    public function __construct($get, $post, $di)
+    public function __construct($get, $post, $put, $delete, $di)
     {
         $this->getRoutes = $get;
         $this->postRoutes = $post;
+        $this->putRoutes = $put;
+        $this->deleteRoutes = $delete;
         $this->di = $di;
     }
 
     public function route(Request $request)
     {
-        if ($request->getMethod() === 'GET') {
-            $routes = $this->getRoutes;
-        } else if ($request->getMethod() === 'POST') {
-            $routes = $this->postRoutes;
-        }
+        $routes = $this->getCurrentRoutes($request->getMethod());
 
         foreach ($routes as $uri => $cont) {
             $uriRegex = $this->getUriRegex($uri);
@@ -38,6 +38,20 @@ class Router
         }
 
         return call_user_func(array(new ErrorController($this->di, $request), 'Error'));
+    }
+
+    private function getCurrentRoutes(string $currentMethod): array
+    { 
+        switch ($currentMethod) {
+            case 'GET':
+                return $this->getRoutes;
+            case 'POST':
+                return $this->postRoutes;
+            case 'PUT':
+                return $this->putRoutes;
+            case 'DELETE':
+                return $this->deleteRoutes;
+        }
     }
 
     public function getUriRegex($uri): string

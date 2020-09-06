@@ -49,17 +49,8 @@ class EventMapper extends Mapper
         }      
     }
 
-    public function insert(array $data): bool
+    public function insert(array $data)
     {
-/*
-        $data = [
-            'name' => "Test 04 from code",
-            'city' => "České Budějovice",
-            'address' => "Adresa 123",
-            'date' => "2022-12-30 18:00",
-            'description' => ''
-        ];
-*/
         try {
             $sql = "INSERT INTO event (name, city, address, date, description) VALUES (:name, :city, :address, :date, :description)";
             $stmt= $this->connection->prepare($sql);
@@ -71,7 +62,30 @@ class EventMapper extends Mapper
         }
     }
 
-    public function doesEventNameExist(string $name): bool
+    public function update(array $data)
+    {
+        var_dump($data);
+        try {
+            $sql = "UPDATE event SET name = :name, 
+                                     city = :city,
+                                     address = :address,
+                                     date = :date, 
+                                     description = :description
+                                 WHERE id = :id";
+            $stmt= $this->connection->prepare($sql);
+            $stmt->bindValue(':name', $data['name'], PDO::PARAM_STR);
+            $stmt->bindValue(':city', $data['city'], PDO::PARAM_STR);
+            $stmt->bindValue(':address', $data['address'], PDO::PARAM_STR);
+            $stmt->bindValue(':date', $data['date'], PDO::PARAM_STR);
+            $stmt->bindValue(':description', $data['description'], PDO::PARAM_STR);
+            $stmt->bindValue(':id', $data['id'], PDO::PARAM_STR);
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+
+    public function doesEventNameExist(string $name)
     {
         try {
             $sql = 'SELECT 1 FROM event WHERE name = :name';
@@ -84,5 +98,33 @@ class EventMapper extends Mapper
         }
 
         return ($result === '1');
+    }
+
+    public function doesOtherEventWithNameExist(string $name, int $id)
+    {
+        try {
+            $sql = 'SELECT 1 FROM event WHERE name = :name AND id <> :id';
+            $stmt = $this->connection->prepare($sql);
+            $stmt->bindValue(':name', $name, PDO::PARAM_STR);
+            $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+            $result = $stmt->fetchColumn();
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+
+        return ($result === '1');
+    }
+
+    public function delete(int $id)
+    {
+        try {
+            $sql = 'DELETE FROM event WHERE id = :id';
+            $stmt = $this->connection->prepare($sql);
+            $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
     }
 }

@@ -13,7 +13,7 @@ class Request
     {
         $this->domain = $_SERVER['HTTP_HOST'];
         $this->path = htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES | ENT_HTML5, 'UTF-8');
-        $this->method = $_SERVER['REQUEST_METHOD'];
+        $this->method = $this->setMethod();
         $this->post = $_POST;
     }
 
@@ -40,5 +40,10 @@ class Request
     public function getPost(): array
     {
         return array_map('trim', $this->post);
+    }
+
+    private function setMethod(): string
+    {
+        return (isset($_REQUEST['_method']) ? strtoupper($_REQUEST['_method']) : $_SERVER['REQUEST_METHOD']);
     }
 }

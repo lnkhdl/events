@@ -5,11 +5,22 @@
 
 <h3 style="color: red">Show event</h3>
 
+<button><a href="<?= '/event/' . $data['id'] . '/edit'?>">Edit event</a></button>
+
+<form action="<?= '/event/'  . $data['id']?>" method="post">
+    <input type="hidden" name="_method" value="delete">
+    <input type="submit" value="Delete event">
+</form>
+
 <?php
     session_start();
-    if (!empty($_SESSION['message'])) {
-        echo '<div style="color: green; padding-top: 10px; padding-bottom: 10px;"><b>! ! !' . $_SESSION['message'] . '! ! !</></div>';
-        unset($_SESSION['message']);
+    if (!empty($_SESSION['success'])) {
+        echo '<div style="color: green; padding-top: 10px; padding-bottom: 10px;"><b>! ! !' . $_SESSION['success'] . '! ! !</></div>';
+        unset($_SESSION['success']);
+    }
+    if (!empty($_SESSION['error'])) {
+        echo '<div style="color: red; padding-top: 10px; padding-bottom: 10px;"><b>! ! !' . $_SESSION['error'] . '! ! !</></div>';
+        unset($_SESSION['error']);
     }
 ?>
 

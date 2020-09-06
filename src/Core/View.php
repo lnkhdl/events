@@ -34,16 +34,12 @@ class View
         return htmlentities($data, ENT_QUOTES);
     }
 
-    public function redirect(string $location): void
-    {
-        header('Location: ' . $location);
-        die();
-    }
-
-    public function redirectWithMessage(string $location, string $message): void
+    public function redirect(string $location, array $message = []): void
     {
         session_start();
-        $_SESSION['message'] = $message;
+        $_SESSION['success'] = isset($message['success']) ? $message['success'] : null;
+        $_SESSION['error'] = isset($message['error']) ? $message['error'] : null;
+
         header('Location: ' . $location);
         die();
     }

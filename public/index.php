@@ -38,6 +38,6 @@ $di->set('View', $view);
 $request = new Request();
 
 require_once($config->get('ROUTES_FILE'));
-$routes = new Router($get, $post, $di);
+$routes = new Router($get, $post, $put, $delete, $di);
 
 $routes->route($request);

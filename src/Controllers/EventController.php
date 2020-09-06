@@ -17,6 +17,7 @@ class EventController extends Controller
         $this->service = $di->get('ServiceFactory')->create('EventService', 'EventMapper');
     }
 
+
     public function index()
     {
         $events = $this->service->getAllEvents();
@@ -35,22 +36,25 @@ class EventController extends Controller
         return $this->view->render('error');
     }
 
+
     public function show(int $id)
     {
-        $result = $this->service->getEventById($id);
+        $event = $this->service->getEventById($id);
 
-        if ($result) {
-            $data = (array) $result;
+        if ($event) {
+            $data = (array) $event;
             return $this->view->render('events/show', $data);
         }
 
         return $this->view->render('error');
     }
 
+
     public function create()
     {
         return $this->view->render('events/create');
     }
+
 
     public function add()
     {
@@ -59,16 +63,62 @@ class EventController extends Controller
         $validator->validate();
 
         if (!$validator->hasErrors()) {
-            $message = $this->service->saveEvent($data);
+            $this->service->saveEvent($data);
 
-            if (isset($message['error'])) {
-                return $this->view->render('events/create', $data, $message);
+            if (isset($this->service->message['error'])) {
+                return $this->view->render('events/create', $data, $this->service->message);
             } else {
                 $event = $this->service->getEventByName($data['name']);
-                return $this->view->redirectWithMessage("/event/" . $event->getId(), $message['message']);
+                return $this->view->redirect("/event/" . $event->getId(), $this->service->message);
             }
         }
 
         return $this->view->render('events/create', $data, $validator->getErrors());
+    }
+
+
+    public function edit(int $id)
+    {
+        $event = $this->service->getEventById($id);
+
+        if ($event) {
+            $data = (array) $event;
+            $data['date'] = $this->service->convertDateToFormFormat($data['date']);
+            return $this->view->render('events/edit', $data);
+        }
+
+        return $this->view->render('error');
+    }
+
+
+    public function update(int $id)
+    {
+        $data = $this->request->getPost();
+        $validator = new EventValidator($data);
+        $validator->validate();
+
+        if (!$validator->hasErrors()) {
+            $this->service->updateEvent($data);
+
+            if (isset($this->service->message['error'])) {
+                return $this->view->render('events/edit', $data, $this->service->message);
+            } else {
+                return $this->view->redirect("/event/" . $id, $this->service->message);
+            }
+        }
+
+        return $this->view->render('events/edit', $data, $validator->getErrors());
+    }
+
+
+    public function destroy(int $id)
+    {
+        $this->service->deleteEvent($id);
+
+        if (isset($this->service->message['error'])) {
+            return $this->view->redirect("/event/" . $id, $this->service->message);
+        } else {
+            return $this->view->redirect('/events', $this->service->message);
+        }
     }
 }
