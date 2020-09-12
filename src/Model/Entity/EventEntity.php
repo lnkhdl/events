@@ -62,28 +62,4 @@ class EventEntity extends Entity
     {
         $this->description = $description;
     }
-
-    public function arrayToEntity(array $data, $entity): void
-    {
-        $entity->setName($data['name']);
-        $entity->setCity($data['city']);
-        $entity->setAddress($data['address']);
-        $entity->setDate(new DateTime($data['date']));
-        $entity->setDescription($data['description']);
-
-        parent::hydrateEntity($data, $entity);
-    }
-
-    public function entityToArray($entity, array $data): array
-    {
-        $data['name'] = $entity->getName();
-        $data['city'] = $entity->getCity();
-        $data['address'] = $entity->getAddress();
-        $data['date'] = date_format($entity->getDate(), 'd/m/Y H:i:s');
-        $data['description'] = $entity->getDescription();
-
-        $data = parent::hydrateArray($entity, $data);
-
-        return $data;
-    }
 }

@@ -2,8 +2,6 @@
 
 namespace App\Model\Mapper;
 
-use RuntimeException;
-
 class MapperFactory
 {
     private $connection;
@@ -15,12 +13,7 @@ class MapperFactory
 
     public function create($mapperClassName)
     {
-        $refl = new \ReflectionClass('\\App\\Model\\Mapper\\' . $mapperClassName);
-
-        try {
-            return $refl->newInstance($this->connection);
-        } catch (\ReflectionException $e) {
-            throw new RuntimeException("Mapper {$mapperClassName} not found.");
-        }
+        $reflMapperClass = new \ReflectionClass('\\App\\Model\\Mapper\\' . $mapperClassName);
+        return $reflMapperClass->newInstance($this->connection);
     }
 }

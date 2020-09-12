@@ -1,56 +1,55 @@
 <?php
-    require_once(__DIR__ . '/../_inc/header.php');
-    require_once(__DIR__ . '/../_inc/navbar.php');
+  require_once __DIR__ . '/../_inc/header.php';
+  require_once __DIR__ . '/../_inc/navbar.php';
 ?>
 
 <h3 style="color: red">Events - Index</h3>
 
 <?php
-    session_start();
     if (!empty($_SESSION['success'])) {
         echo '<div style="color: green; padding-top: 10px; padding-bottom: 10px;"><b>! ! !' . $_SESSION['success'] . '! ! !</></div>';
         unset($_SESSION['success']);
     }
 ?>
 
-<?php foreach ($data as $d): ?>
+<?php foreach ($data as $event): ?>
     <hr>
     <table>
         <tr>
             <td>Id</td>
-            <td><?= $d['id']?></td>
+            <td><a href="<?= '/event/' . $event->id ?>"><?= $event->id ?></a></td>
         </tr>
         <tr>
             <td>Name</td>
-            <td><?= $d['name']?></td>
+            <td><?= $event->name ?></td>
         </tr>
         <tr>
             <td>City</td>
-            <td><?= $d['city']?></td>
+            <td><?= $event->city ?></td>
         </tr>
         <tr>
             <td>Address</td>
-            <td><?= $d['address']?></td>
+            <td><?= $event->address ?></td>
         </tr>
         <tr>
             <td>Date</td>
-            <td><?= $d['date']?></td>
+            <td><?= $event->date ?></td>
         </tr>
         <tr>
             <td>Description</td>
-            <td><?= $d['description']?></td>
+            <td><?= $event->description ?></td>
         </tr>
         <tr>
             <td>Created at</td>
-            <td><?= $d['created_at']?></td>
+            <td><?= $event->created_at ?></td>
         </tr>
         <tr>
             <td>Updated at</td>
-            <td><?= $d['updated_at']?></td>
+            <td><?= $event->updated_at ?></td>
         </tr>
     </table>
 <?php endforeach ?>
 
-<?php 
-    require_once(__DIR__ . '/../_inc/footer.php');
+<?php
+  require_once __DIR__ . '/../_inc/footer.php';
 ?>

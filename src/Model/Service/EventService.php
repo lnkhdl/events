@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace App\Model\Service;
 
-use DateTime;
-
 class EventService extends Service
 {
     public $message = [

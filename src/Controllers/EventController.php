@@ -23,14 +23,7 @@ class EventController extends Controller
         $events = $this->service->getAllEvents();
 
         if ($events) {
-            $data = [];
-            foreach ($events as $event) {
-                array_push($data, (array) $event);
-            }
-
-            if ($data) {
-                return $this->view->render('events/index', $data);  
-            }
+            return $this->view->render('events/index', $events);  
         }
 
         return $this->view->render('error');
@@ -42,8 +35,7 @@ class EventController extends Controller
         $event = $this->service->getEventById($id);
 
         if ($event) {
-            $data = (array) $event;
-            return $this->view->render('events/show', $data);
+            return $this->view->render('events/show', $event);
         }
 
         return $this->view->render('error');
@@ -60,7 +52,6 @@ class EventController extends Controller
     {
         $data = $this->request->getPost();
         $validator = new EventValidator($data);
-        $validator->validate();
 
         if (!$validator->hasErrors()) {
             $this->service->saveEvent($data);
@@ -82,9 +73,8 @@ class EventController extends Controller
         $event = $this->service->getEventById($id);
 
         if ($event) {
-            $data = (array) $event;
-            $data['date'] = $this->service->convertDateToFormFormat($data['date']);
-            return $this->view->render('events/edit', $data);
+            $event->date = $this->service->convertDateToFormFormat($event->date);
+            return $this->view->render('events/edit', (array)$event);
         }
 
         return $this->view->render('error');
@@ -95,7 +85,6 @@ class EventController extends Controller
     {
         $data = $this->request->getPost();
         $validator = new EventValidator($data);
-        $validator->validate();
 
         if (!$validator->hasErrors()) {
             $this->service->updateEvent($data);

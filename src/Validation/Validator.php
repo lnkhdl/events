@@ -13,23 +13,20 @@ abstract class Validator
     {
         $this->fieldsDetails = $this->setFieldsDetails();
         $this->setFields($data);
+        $this->validate();
     }  
     
     private function setFields(array $data): void
     {
-        foreach ($this->fieldsDetails as $name => $rules)
-        {
-            // Put exception here in case the file name doesnt exist, e.g. date is in HTML form but is not in EventValidator
+        foreach ($this->fieldsDetails as $name => $rules) {
             $this->fields[$name] = new Field($name, $data[$name], $rules);
         }
     }
 
     public function validate(): void
     {
-        foreach ($this->fields as $field)
-        {
-            foreach ($field->rules as $rule)
-            {
+        foreach ($this->fields as $field) {
+            foreach ($field->rules as $rule) {
                 if (!$rule->isValid()) {
                     $field->addError($rule->getError());
                 }
@@ -39,8 +36,7 @@ abstract class Validator
 
     public function hasErrors(): bool
     {
-        foreach ($this->fields as $field)
-        {
+        foreach ($this->fields as $field) {
             if (!empty($field->errors)) {
                 return true;
             }
@@ -53,8 +49,7 @@ abstract class Validator
     {
         $errors = [];
 
-        foreach ($this->fields as $field)
-        {
+        foreach ($this->fields as $field) {
             $errors[$field->name] = implode('|', $field->errors);
         }
 

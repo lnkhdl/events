@@ -1,6 +1,6 @@
 <?php
-require_once(__DIR__ . '/../_inc/header.php');
-require_once(__DIR__ . '/../_inc/navbar.php');
+  require_once __DIR__ . '/../_inc/header.php';
+  require_once __DIR__ . '/../_inc/navbar.php';
 ?>
 
 <h3 style="color: green">Create event</h3>
@@ -38,5 +38,5 @@ require_once(__DIR__ . '/../_inc/navbar.php');
 
 
 <?php
-require_once(__DIR__ . '/../_inc/footer.php');
+  require_once __DIR__ . '/../_inc/footer.php';
 ?>

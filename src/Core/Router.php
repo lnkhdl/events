@@ -6,55 +6,49 @@ use App\Controllers\ErrorController;
 
 class Router
 {
-    public $getRoutes = array();
-    public $postRoutes = array();
-    public $putRoutes = array();
-    public $deleteRoutes = array();
+    private $request;
+    private $di;
+    private $routes = [];
     private $regexTypes = [
         'id' => '\d+',
         'name' => '\w+'
     ];
-    private $di;
 
-    public function __construct($get, $post, $put, $delete, $di)
+    public function __construct($request, $di, $get, $post, $put, $delete)
     {
-        $this->getRoutes = $get;
-        $this->postRoutes = $post;
-        $this->putRoutes = $put;
-        $this->deleteRoutes = $delete;
+        $this->request = $request;
         $this->di = $di;
+        $this->routes = $this->getCurrentMethodRoutes($get, $post, $put, $delete);
     }
 
-    public function route(Request $request)
+    public function route()
     {
-        $routes = $this->getCurrentRoutes($request->getMethod());
-
-        foreach ($routes as $uri => $cont) {
+        foreach ($this->routes as $uri => $cont) {
             $uriRegex = $this->getUriRegex($uri);
-            if (preg_match('@^' . $uriRegex . '$@', $request->getPath())) {
+            if (preg_match('@^' . $uriRegex . '$@', $this->request->getPath())) {
                 list($controller, $method) = explode('@', $cont);
-                return $this->callController($request, $uri, $controller, $method);
+                return $this->callController($this->request, $uri, $controller, $method);
             }
         }
 
-        return call_user_func(array(new ErrorController($this->di, $request), 'Error'));
+        return call_user_func(array(new ErrorController($this->di, $this->request), 'Error'));
     }
 
-    private function getCurrentRoutes(string $currentMethod): array
+    private function getCurrentMethodRoutes(array $get, array $post, array $put, array $delete): array
     { 
-        switch ($currentMethod) {
+        switch ($this->request->getMethod()) {
             case 'GET':
-                return $this->getRoutes;
+                return $get;
             case 'POST':
-                return $this->postRoutes;
+                return $post;
             case 'PUT':
-                return $this->putRoutes;
+                return $put;
             case 'DELETE':
-                return $this->deleteRoutes;
+                return $delete;
         }
     }
 
-    public function getUriRegex($uri): string
+    private function getUriRegex($uri): string
     {
         foreach ($this->regexTypes as $type => $regex) {
             $uri = str_replace('{' . $type . '}', $regex, $uri);
@@ -63,7 +57,7 @@ class Router
         return $uri;
     }
 
-    public function getParams($requestPath, $route): array
+    private function getParams($requestPath, $route): array
     {
         $params = [];
 
@@ -79,7 +73,7 @@ class Router
         return $params;
     }
 
-    public function callController($request, $route, $controller, $method): void
+    private function callController($request, $route, $controller, $method): void
     {
         $controller = '\\App\\Controllers\\' . $controller;
         $controller = new $controller($this->di, $request);

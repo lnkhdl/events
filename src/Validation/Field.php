@@ -34,8 +34,14 @@ class Field
 
     private function createRule(string $name, string $condition): void
     {
-        $ruleClassName = '\\App\\Validation\\Rules\\' . ucfirst($name) . 'Rule';
-        $this->rules[$name] = new $ruleClassName(array('value' => $this->value, 'condition' => $condition));
+        try {
+            $reflRuleClass = new \ReflectionClass('\\App\\Validation\\Rules\\' . ucfirst($name) . 'Rule');
+            $this->rules[$name] = $reflRuleClass->newInstance(array('value' => $this->value, 'condition' => $condition));
+        } catch (\ReflectionException $e) {
+            //echo $e->getMessage();
+            echo "Unexpected error happened.\r\n";
+            die();
+        }        
     }
 
     public function addError(string $errorMessage): void

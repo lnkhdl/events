@@ -8,12 +8,10 @@ use App\Model\Mapper\Mapper;
 
 abstract class Service
 {
-    protected $storage;
     protected $mapper;
 
-    public function __construct(PdoStorage $storage, Mapper $mapper)
+    public function __construct(Mapper $mapper)
     {
-        $this->storage = $storage;
         $this->mapper = $mapper;
     }
 }

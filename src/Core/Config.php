@@ -8,7 +8,7 @@ class Config
 
     public function __construct($filePath)
     {
-        $this->params = include($filePath);
+        $this->params = require_once $filePath;
     }
 
     public function has($paramKey): bool

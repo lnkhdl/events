@@ -4,7 +4,9 @@ namespace App\Model\Service;
 
 use App\Core\PdoStorage;
 use App\Model\Mapper\MapperFactory;
-use RuntimeException;
+use ReflectionClass;
+use Exception;
+use ReflectionException;
 
 class ServiceFactory
 {
@@ -17,15 +19,23 @@ class ServiceFactory
 
     public function create($serviceClassName, $mapperClassName)
     {
-        $refl = new \ReflectionClass('\\App\\Model\\Service\\' . $serviceClassName);
-
-        $mappperFactory = new MapperFactory($this->storage->db);
-        $mapper = $mappperFactory->create($mapperClassName);
-
         try {
-            return $refl->newInstance($this->storage, $mapper);
-        } catch (\ReflectionException $e) {
-            throw new RuntimeException("Service {$serviceClassName} not found.");
+            if ($this->storage->getConnection()) {
+                $mappperFactory = new MapperFactory($this->storage->getConnection());
+                $mapper = $mappperFactory->create($mapperClassName);
+                $reflServiceClass = new ReflectionClass('\\App\\Model\\Service\\' . $serviceClassName);
+                return $reflServiceClass->newInstance($mapper);
+            } else {
+                throw new Exception();
+            }
+        } catch (ReflectionException $e) {
+            //echo $e->getMessage();
+            echo "Unexpected error happened.\r\n";
+            die();
+        } catch (Exception $e) {
+            // echo $e->getMessage();
+            echo "Unexpected error happened.\r\n";
+            die();
         }
     }
 }
