@@ -7,11 +7,11 @@ use DateTime;
 
 class EventEntity extends Entity
 {
-    public $name;
-    public $city;
-    public $address;
-    public $date;
-    public $description;
+    private $name;
+    private $city;
+    private $address;
+    private $date;
+    private $description;
 
     public function getName(): string
     {
@@ -43,12 +43,12 @@ class EventEntity extends Entity
         $this->address = $address;
     }
 
-    public function getDate(): DateTime
+    public function getDate(): string
     {
         return $this->date;
     }
 
-    public function setDate(DateTime $date)
+    public function setDate(string $date)
     {
         $this->date = $date;
     }
@@ -61,5 +61,19 @@ class EventEntity extends Entity
     public function setDescription(string $description)
     {
         $this->description = $description;
+    }
+
+    public function entityToArray($entity): array
+    {
+        $data[] = null;
+        $data['name'] = $entity->getName();
+        $data['city'] = $entity->getCity();
+        $data['address'] = $entity->getAddress();
+        $data['date'] = $entity->getDate();
+        $data['description'] = $entity->getDescription();
+
+        $data = parent::hydrateArray($entity, $data);
+
+        return $data;
     }
 }

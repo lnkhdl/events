@@ -8,7 +8,9 @@ $get = [
     "/events" => "EventController@index",
     "/event/{id}" => "EventController@show",
     "/event/create" => "EventController@create",
-    "/event/{id}/edit" => "EventController@edit"
+    "/event/{id}/edit" => "EventController@edit",
+    "/error404" => "ErrorController@error404",
+    "/error500" => "ErrorController@error500"
 ];
 
 $post = [

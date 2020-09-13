@@ -13,9 +13,9 @@ class View
         $this->config = $di->get('Config');
     }
 
-    public function render(string $template, $data = [], array $errors = []): void
+    public function render(string $template, $rawData = [], array $errors = []): void
     {
-        $this->convertHtmlEntitiesRecursive($data);
+        $data = $this->cleanData($rawData);
 
         $template = str_replace('­/', $this->config->get('DS'), $template);
         require_once $this->config->get('TEMPLATE_DIR') . $template . '.php';
@@ -30,18 +30,23 @@ class View
         die();
     }
 
-    private function convertHtmlEntitiesRecursive(&$data) {
-        if (is_array($data)) {
-            foreach ($data as $key => $value) {
-                $data[$key] = $this->convertHtmlEntitiesRecursive($value);
+    private function cleanData($rawData)
+    {
+        if (is_array($rawData)) {
+            foreach ($rawData as $key => $value) {   
+                $data[$key] = $this->cleanData($value);
             }
             return $data;
-        } else if (is_object($data)) {
-            foreach ($data as $key => $value) {
-                $data->$key = $this->convertHtmlEntitiesRecursive($value);
+        } else if (is_object($rawData)) {
+            $reflection = new \ReflectionObject($rawData);
+            foreach ($reflection->getProperties() as $property) {
+                $property->setAccessible(true);
+                $key = $property->getName();
+                $value = $property->getValue($rawData);
+                $data[$key] = $this->cleanData($value);
             }
             return $data;
         }
-        return htmlentities($data, ENT_QUOTES);
+        return htmlentities($rawData, ENT_QUOTES);
     }
 }

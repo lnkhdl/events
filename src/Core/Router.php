@@ -31,7 +31,7 @@ class Router
             }
         }
 
-        return call_user_func(array(new ErrorController($this->di, $this->request), 'Error'));
+        return call_user_func(array(new ErrorController($this->di, $this->request), 'error404'));
     }
 
     private function getCurrentMethodRoutes(array $get, array $post, array $put, array $delete): array

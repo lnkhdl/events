@@ -25,8 +25,6 @@ class EventController extends Controller
         if ($events) {
             return $this->view->render('events/index', $events);  
         }
-
-        return $this->view->render('error');
     }
 
 
@@ -38,7 +36,7 @@ class EventController extends Controller
             return $this->view->render('events/show', $event);
         }
 
-        return $this->view->render('error');
+        return $this->view->redirect('/error404/');
     }
 
 
@@ -73,11 +71,10 @@ class EventController extends Controller
         $event = $this->service->getEventById($id);
 
         if ($event) {
-            $event->date = $this->service->convertDateToFormFormat($event->date);
-            return $this->view->render('events/edit', (array)$event);
+            $event->setDate($this->service->convertDateToFormFormat($event->getDate()));
+            $data = $event->entityToArray($event);
+            return $this->view->render('events/edit', $data);
         }
-
-        return $this->view->render('error');
     }
 
 

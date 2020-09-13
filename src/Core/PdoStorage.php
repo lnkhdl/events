@@ -31,8 +31,7 @@ class PdoStorage
             $this->connection = new PDO($this->dsn, $this->user, $this->password, $this->options);
             return $this->connection;
         } catch (PDOException $e) {
-            // echo $e->getMessage();
-            echo "Error when connecting to the database.\r\n";
+            throw new PDOException($e->getMessage(), (int)$e->getCode());
         }
     }
 }

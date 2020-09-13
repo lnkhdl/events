@@ -1,7 +1,6 @@
 <?php
 
 return [
-    'APP_NAME' => 'Events App',
     'DS' => DIRECTORY_SEPARATOR,
     'SRC_DIR' => dirname(__DIR__) . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR,
     'TEMPLATE_DIR' => dirname(__DIR__) . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'Templates' . DIRECTORY_SEPARATOR,
