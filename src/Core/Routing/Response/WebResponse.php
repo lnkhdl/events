@@ -1,24 +1,17 @@
 <?php
 
-namespace App\Core;
+namespace App\Core\Routing\Response;
 
-use App\Core\DependencyInjector;
+use App\Core\Config;
 
-class View
+class WebResponse implements ResponseInterface
 {
-    protected $config;
-
-    public function __construct(DependencyInjector $di)
-    {
-        $this->config = $di->get('Config');
-    }
-
     public function render(string $template, $rawData = [], array $errors = []): void
     {
-        $data = $this->cleanData($rawData);
+        $data = $rawData !== [] ? $this->cleanData($rawData) : null;
 
-        $template = str_replace('­/', $this->config->get('DS'), $template);
-        require_once $this->config->get('TEMPLATE_DIR') . $template . '.php';
+        $template = str_replace('­/', Config::get('DS'), $template);
+        require_once Config::get('TEMPLATE_DIR') . $template . '.php';
     }
 
     public function redirect(string $location, array $message = []): void

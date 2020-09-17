@@ -3,18 +3,21 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
-use App\Validation\EventValidator;
+use App\Core\Routing\{
+    Request\Request,
+    Response\ResponseInterface
+};
 use App\Core\DependencyInjector;
-use App\Core\Request;
+use App\Validation\EventValidator;
 
 class EventController extends Controller
 {
     private $service;
 
-    public function __construct(DependencyInjector $di, Request $request)
+    public function __construct(Request $request, ResponseInterface $response, DependencyInjector $injector)
     {
-        parent::__construct($di, $request);
-        $this->service = $di->get('ServiceFactory')->create('EventService', 'EventMapper');
+        parent::__construct($request, $response, $injector);
+        $this->service = $injector->get('ServiceFactory')->create('EventService', 'EventMapper');
     }
 
 
@@ -23,7 +26,7 @@ class EventController extends Controller
         $events = $this->service->getAllEvents();
 
         if ($events) {
-            return $this->view->render('events/index', $events);  
+            return $this->response->render('events/index', $events);  
         }
     }
 
@@ -33,16 +36,16 @@ class EventController extends Controller
         $event = $this->service->getEventById($id);
 
         if ($event) {
-            return $this->view->render('events/show', $event);
-        }
-
-        return $this->view->redirect('/error404/');
+            return $this->response->render('events/show', $event);
+        } else {
+            throw new \Exception('Page not found', 404);
+        }        
     }
 
 
     public function create()
     {
-        return $this->view->render('events/create');
+        return $this->response->render('events/create');
     }
 
 
@@ -55,14 +58,14 @@ class EventController extends Controller
             $this->service->saveEvent($data);
 
             if (isset($this->service->message['error'])) {
-                return $this->view->render('events/create', $data, $this->service->message);
+                return $this->response->render('events/create', $data, $this->service->message);
             } else {
                 $event = $this->service->getEventByName($data['name']);
-                return $this->view->redirect("/event/" . $event->getId(), $this->service->message);
+                return $this->response->redirect("/event/" . $event->getId(), $this->service->message);
             }
         }
 
-        return $this->view->render('events/create', $data, $validator->getErrors());
+        return $this->response->render('events/create', $data, $validator->getErrors());
     }
 
 
@@ -73,7 +76,7 @@ class EventController extends Controller
         if ($event) {
             $event->setDate($this->service->convertDateToFormFormat($event->getDate()));
             $data = $event->entityToArray($event);
-            return $this->view->render('events/edit', $data);
+            return $this->response->render('events/edit', $data);
         }
     }
 
@@ -87,13 +90,13 @@ class EventController extends Controller
             $this->service->updateEvent($data);
 
             if (isset($this->service->message['error'])) {
-                return $this->view->render('events/edit', $data, $this->service->message);
+                return $this->response->render('events/edit', $data, $this->service->message);
             } else {
-                return $this->view->redirect("/event/" . $id, $this->service->message);
+                return $this->response->redirect("/event/" . $id, $this->service->message);
             }
         }
 
-        return $this->view->render('events/edit', $data, $validator->getErrors());
+        return $this->response->render('events/edit', $data, $validator->getErrors());
     }
 
 
@@ -102,9 +105,9 @@ class EventController extends Controller
         $this->service->deleteEvent($id);
 
         if (isset($this->service->message['error'])) {
-            return $this->view->redirect("/event/" . $id, $this->service->message);
+            return $this->response->redirect("/event/" . $id, $this->service->message);
         } else {
-            return $this->view->redirect('/events', $this->service->message);
+            return $this->response->redirect('/events', $this->service->message);
         }
     }
 }

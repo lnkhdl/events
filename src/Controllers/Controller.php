@@ -2,17 +2,22 @@
 
 namespace App\Controllers;
 
-use App\Core\Request;
+use App\Core\Routing\{
+    Request\Request,
+    Response\ResponseInterface
+};
 use App\Core\DependencyInjector;
 
 class Controller
 {
-    protected $view;
     protected $request;
+    protected $response;
+    protected $injector;
 
-    public function __construct(DependencyInjector $di, Request $request)
+    public function __construct(Request $request, ResponseInterface $response, DependencyInjector $injector)
     {
-        $this->view = $di->get('View');
         $this->request = $request;
+        $this->response = $response;
+        $this->injector = $injector;
     }
 }

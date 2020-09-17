@@ -4,21 +4,15 @@ namespace App\Core;
 
 class Config
 {
-    private $params = [];
+    public static $params = [];
 
-    public function __construct($filePath)
+    public static function get($paramKey)
     {
-        $this->params = require_once $filePath;
-    }
+        if (!self::$params) {
+            self::$params = require $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'config.php';
+        }
 
-    public function has($paramKey): bool
-    {
-        return isset($this->params[$paramKey]);
-    }
-
-    public function get($paramKey): ?string
-    {
-        return $this->params[$paramKey] ?? null;
+        return self::$params[$paramKey] ?? null;
     }
 
 }

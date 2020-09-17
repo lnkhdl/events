@@ -1,26 +1,16 @@
 <?php
 
-$get = [
-    "/" => "PageController@index",
-    "/index" => "PageController@index",
-    "/about" => "PageController@about",
-    "/contact" => "PageController@contact",
-    "/events" => "EventController@index",
-    "/event/{id}" => "EventController@show",
-    "/event/create" => "EventController@create",
-    "/event/{id}/edit" => "EventController@edit",
-    "/error404" => "ErrorController@error404",
-    "/error500" => "ErrorController@error500"
-];
-
-$post = [
-    "/event/add" => "EventController@add"
-];
-
-$put = [
-    "/event/{id}" => "EventController@update"
-];
-
-$delete = [
-    "/event/{id}" => "EventController@destroy"
+return [
+    'get|/|PageController|index',
+    'get|/index|PageController|index',
+    'get|/about|PageController|about',
+    'get|/contact|PageController|contact',
+    'get|/events|EventController|index',
+    'get|/event/{int}|EventController|show',
+    'get|/event/create|EventController|create',
+    'get|/event/{int}/edit|EventController|edit',
+    'post|/event/add|EventController|add',
+    'put|/event/{int}|EventController|update',
+    'delete|/event/{int}|EventController|destroy',
+    'get|/test/{int}/{string}|PageController|test'
 ];

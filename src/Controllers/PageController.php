@@ -6,16 +6,23 @@ class PageController extends Controller
 {
     public function index()
     {
-        return $this->view->render('index');
+        return $this->response->render('index');
     }
 
     public function about()
     {
-        return $this->view->render('about');
+        return $this->response->render('about');
     }
 
     public function contact()
     {
-        return $this->view->render('contact');
+        return $this->response->render('contact');
+    }
+
+    public function test(int $id, string $name)
+    {
+        echo "Test page<br>";
+        echo "ID: " . $id . "<br>";
+        echo "Name: " . $name . "<br";
     }
 }
