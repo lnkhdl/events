@@ -2,3 +2,4 @@
 /_log
 /vendor/
 /.vscode/
+/tests/_output

@@ -19,13 +19,14 @@ class RequestFactory
         }
         $method = isset($_REQUEST['_method']) ? $_REQUEST['_method'] : $_SERVER['REQUEST_METHOD'];
 
-        if ($method == 'POST' && !isset($_POST)) {
-            throw new Exception('Cannot read POST data.');
-        }
-        
-
         $request = new Request();
-        $request->setPath($path)->setMethod($method)->setPost($_POST);
+        $request->setPath($path)->setMethod($method);
+
+        if ($method == 'POST' && (!isset($_POST) || $_POST == null)) {
+            throw new Exception('Cannot read POST data.');
+        } else if ($method == 'POST') {
+            $request->setPost($_POST);
+        }    
 
         return $request;
     }

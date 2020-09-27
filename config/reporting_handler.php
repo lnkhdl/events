@@ -15,7 +15,7 @@ function customHandler($e)
             http_response_code(500);
             include __DIR__ . '/../src/Templates/errors/500.php';
             die();
-        }       
+        }
     }
 
     // Die because of Fatal error handling, e.g. require file that doesn't exist

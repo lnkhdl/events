@@ -18,31 +18,27 @@ class App
     public static function boot()
     {
         $definedRoutes = require_once Config::get('ROUTES_FILE');
-        $routeFactory = new RouteFactory();
+        $routeFactory = new RouteFactory;
         $routes = $routeFactory->create($definedRoutes);
 
-        $requestFactory = new RequestFactory();
+        $requestFactory = new RequestFactory;
         $request = $requestFactory->create();
 
-        $router = new Router();
+        $router = new Router;
         $currentRoute = $router->getCurrentRoute($request, $routes);
-
-        if (!$currentRoute) {
-            throw new Exception('Page not found', 404);
-        }
 
         $request->setParameters($router->getParameters($request->getPath(), $currentRoute->getPattern()));
 
-        $validator = new ControllerValidator();
+        $validator = new ControllerValidator;
         $validator = $validator->validate($currentRoute->getController(), $currentRoute->getAction(), $request->getParameters());
 
         if ($currentRoute->getMethod() === 'api') {
-            $response = new ApiResponse();
+            $response = new ApiResponse;
         } else {
-            $response = new WebResponse();
+            $response = new WebResponse;
         }
 
-        $injector = new DependencyInjector();
+        $injector = new DependencyInjector;
 
         $dbConfig = require Config::get('DATABASE_DETAILS');
         $pdoStorage = new PdoStorage($dbConfig['DB_HOST'], $dbConfig['DB_NAME'], $dbConfig['DB_USER'], $dbConfig['DB_PASS']);

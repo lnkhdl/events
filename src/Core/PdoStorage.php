@@ -25,7 +25,7 @@ class PdoStorage
         ];
     }
 
-    public function getConnection()
+    public function getConnection(): ?PDO
     {
         try {
             $this->connection = new PDO($this->dsn, $this->user, $this->password, $this->options);

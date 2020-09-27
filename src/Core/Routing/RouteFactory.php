@@ -4,21 +4,14 @@ namespace App\Core\Routing;
 
 class RouteFactory
 {
-    /**
-     * Array of Route objects
-     */
-    private $routes = [];
-
-    /**
-     * Creates Route objects and adds them into the array
-     */
     public function create(array $routes): array
     {
+        $routeObjects = [];
         foreach ($routes as $route) {
-            $this->routes[] = $this->createRouteObject($route);
+            array_push($routeObjects, $this->createRouteObject($route));
         }
 
-        return $this->routes;
+        return $routeObjects;
     }
 
     private function createRouteObject($routeData): Route
@@ -28,7 +21,4 @@ class RouteFactory
         $route->setMethod($method)->setPattern($pattern)->setController($controller)->setAction($action);
         return $route;
     }
-
-
-
 }

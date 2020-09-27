@@ -1,13 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Core\Routing\Request;
 
 class Request
 {
     private $path;
     private $method;
-    private $post;
-    private $parameters;
+    private $post = [];
+    private $parameters = [];
 
     /**
      * Get the value of path
@@ -22,7 +24,7 @@ class Request
      *
      * @return Request
      */ 
-    public function setPath($path): Request
+    public function setPath(string $path): Request
     {
         $this->path = $path;
 
@@ -42,7 +44,7 @@ class Request
      *
      * @return Request
      */ 
-    public function setMethod($method): Request
+    public function setMethod(string $method): Request
     {
         $this->method = strtoupper($method);
 
@@ -52,9 +54,9 @@ class Request
     /**
      * Get the value of post
      */ 
-    public function getPost(): array
+    public function getPost(): ?array
     {
-        return array_map('trim', $this->post);
+        return $this->post ? array_map('trim', $this->post) : null;
     }
 
     /**
@@ -62,7 +64,7 @@ class Request
      *
      * @return Request
      */ 
-    public function setPost($post): Request
+    public function setPost(array $post): Request
     {
         $this->post = $post;
 
@@ -72,9 +74,9 @@ class Request
     /**
      * Get the value of parameters
      */ 
-    public function getParameters(): array
+    public function getParameters(): ?array
     {
-        return $this->parameters;
+        return $this->parameters ?? null;
     }
 
     /**
@@ -82,7 +84,7 @@ class Request
      *
      * @return Request
      */ 
-    public function setParameters($parameters): Request
+    public function setParameters(array $parameters): Request
     {
         $this->parameters = $parameters;
 

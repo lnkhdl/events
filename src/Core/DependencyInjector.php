@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Core;
 
@@ -11,7 +12,7 @@ class DependencyInjector
         $this->dependencies[$name] = $object;
     }
 
-    public function get(string $name): ?object
+    public function get(string $name)
     {
         return $this->dependencies[$name] ?? null;
     }
