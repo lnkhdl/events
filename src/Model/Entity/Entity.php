@@ -40,11 +40,11 @@ abstract class Entity
         $this->updated_at = $date;
     }
 
-    public function hydrateArray(Entity $entity, array $data)
+    public function hydrateArray(array $data)
     {
-        $data['id'] = $entity->getId();
-        $data['created_at'] = $entity->getCreatedAt();
-        $data['updated_at'] = $entity->getUpdatedAt();
+        $data['id'] = $this->getId();
+        $data['created_at'] = $this->getCreatedAt();
+        $data['updated_at'] = $this->getUpdatedAt();
 
         return $data;
     }

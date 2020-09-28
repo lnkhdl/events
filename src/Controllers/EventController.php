@@ -12,18 +12,20 @@ use App\Validation\EventValidator;
 
 class EventController extends Controller
 {
-    private $service;
+    private $eventService;
+    private $memberService;
 
     public function __construct(Request $request, ResponseInterface $response, DependencyInjector $injector)
     {
         parent::__construct($request, $response, $injector);
-        $this->service = $injector->get('ServiceFactory')->create('EventService', 'EventMapper');
+        $this->eventService = $injector->get('ServiceFactory')->create('EventService', 'EventMapper');
+        $this->memberService = $injector->get('ServiceFactory')->create('MemberService', 'MemberMapper');
     }
 
 
     public function index()
     {
-        $events = $this->service->getAllEvents();
+        $events = $this->eventService->getAllEvents();
 
         if ($events) {
             return $this->response->render('events/index', $events);  
@@ -33,13 +35,17 @@ class EventController extends Controller
 
     public function show(int $id)
     {
-        $event = $this->service->getEventById($id);
-
+        $event = $this->eventService->getEventById($id);
+        
         if ($event) {
-            return $this->response->render('events/show', $event);
+            $members = $this->memberService->getMembersByEventId($id);
+            $data = array();
+            $data[0] = $event;
+            $data = array_merge($data, $members);
+            return $this->response->render('events/show', $data);
         } else {
             throw new \Exception('Page not found', 404);
-        }        
+        }
     }
 
 
@@ -55,13 +61,13 @@ class EventController extends Controller
         $validator = new EventValidator($data);
 
         if (!$validator->hasErrors()) {
-            $this->service->saveEvent($data);
+            $this->eventService->saveEvent($data);
 
-            if (isset($this->service->message['error'])) {
-                return $this->response->render('events/create', $data, $this->service->message);
+            if (isset($this->eventService->message['error'])) {
+                return $this->response->render('events/create', $data, $this->eventService->message);
             } else {
-                $event = $this->service->getEventByName($data['name']);
-                return $this->response->redirect("/event/" . $event->getId(), $this->service->message);
+                $event = $this->eventService->getEventByName($data['name']);
+                return $this->response->redirect("/event/" . $event->getId(), $this->eventService->message);
             }
         }
 
@@ -71,11 +77,11 @@ class EventController extends Controller
 
     public function edit(int $id)
     {
-        $event = $this->service->getEventById($id);
+        $event = $this->eventService->getEventById($id);
 
         if ($event) {
-            $event->setDate($this->service->convertDateToFormFormat($event->getDate()));
-            $data = $event->entityToArray($event);
+            $event->setDate($this->eventService->convertDateToFormFormat($event->getDate()));
+            $data = $event->entityToArray();
             return $this->response->render('events/edit', $data);
         }
     }
@@ -87,12 +93,12 @@ class EventController extends Controller
         $validator = new EventValidator($data);
 
         if (!$validator->hasErrors()) {
-            $this->service->updateEvent($data);
+            $this->eventService->updateEvent($data);
 
-            if (isset($this->service->message['error'])) {
-                return $this->response->render('events/edit', $data, $this->service->message);
+            if (isset($this->eventService->message['error'])) {
+                return $this->response->render('events/edit', $data, $this->eventService->message);
             } else {
-                return $this->response->redirect("/event/" . $id, $this->service->message);
+                return $this->response->redirect("/event/" . $id, $this->eventService->message);
             }
         }
 
@@ -102,12 +108,12 @@ class EventController extends Controller
 
     public function destroy(int $id)
     {
-        $this->service->deleteEvent($id);
+        $this->eventService->deleteEvent($id);
 
-        if (isset($this->service->message['error'])) {
-            return $this->response->redirect("/event/" . $id, $this->service->message);
+        if (isset($this->eventService->message['error'])) {
+            return $this->response->redirect("/event/" . $id, $this->eventService->message);
         } else {
-            return $this->response->redirect('/events', $this->service->message);
+            return $this->response->redirect('/events', $this->eventService->message);
         }
     }
 }

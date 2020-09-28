@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace App\Model\Entity;
 
-use DateTime;
-
 class EventEntity extends Entity
 {
     private $name;
@@ -63,16 +61,16 @@ class EventEntity extends Entity
         $this->description = $description;
     }
 
-    public function entityToArray($entity): array
+    public function entityToArray(): array
     {
         $data[] = null;
-        $data['name'] = $entity->getName();
-        $data['city'] = $entity->getCity();
-        $data['address'] = $entity->getAddress();
-        $data['date'] = $entity->getDate();
-        $data['description'] = $entity->getDescription();
+        $data['name'] = $this->getName();
+        $data['city'] = $this->getCity();
+        $data['address'] = $this->getAddress();
+        $data['date'] = $this->getDate();
+        $data['description'] = $this->getDescription();
 
-        $data = parent::hydrateArray($entity, $data);
+        $data = parent::hydrateArray($data);
 
         return $data;
     }

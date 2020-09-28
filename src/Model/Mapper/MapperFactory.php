@@ -2,6 +2,8 @@
 
 namespace App\Model\Mapper;
 
+use ReflectionClass;
+
 class MapperFactory
 {
     private $connection;
@@ -11,7 +13,7 @@ class MapperFactory
         $this->connection = $connection;
     }
 
-    public function create($mapperClassName)
+    public function create($mapperClassName): Mapper
     {
         $reflMapperClass = new \ReflectionClass('\\App\\Model\\Mapper\\' . $mapperClassName);
         return $reflMapperClass->newInstance($this->connection);

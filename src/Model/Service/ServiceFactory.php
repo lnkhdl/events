@@ -15,7 +15,7 @@ class ServiceFactory
         $this->storage = $storage;
     }
 
-    public function create($serviceClassName, $mapperClassName)
+    public function create($serviceClassName, $mapperClassName): Service
     {
         $mappperFactory = new MapperFactory($this->storage->getConnection());
         $mapper = $mappperFactory->create($mapperClassName);
