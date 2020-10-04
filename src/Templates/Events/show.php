@@ -6,7 +6,7 @@
 <h3 style="color: red">Show event</h3>
 
 <button><a href="<?= '/event/' . $data[0]['id'] . '/edit' ?>">Edit event</a></button>
-<button><a href="<?= '/event/' . $data[0]['id'] . '/add' ?>">Add member</a></button>
+<button><a href="<?= '/event/' . $data[0]['id'] . '/member/create' ?>">Add new member</a></button>
 
 <form action="<?= '/event/'. $data[0]['id'] ?>" method="post">
     <input type="hidden" name="_method" value="delete">
@@ -75,6 +75,8 @@
         echo '<th>event_id</th>';
         echo '<th>created_at</th>';
         echo '<th>updated_at</th>';
+        echo '<th>edit</th>';
+        echo '<th>delete</th>';
         echo '</tr>';
         echo '</thead>';
 
@@ -88,6 +90,11 @@
             echo '<td>' . $data[$member]['event_id'] . '</td>';
             echo '<td>' . $data[$member]['created_at'] . '</td>';
             echo '<td>' . $data[$member]['updated_at'] . '</td>';
+            echo '<td><button><a href="/event/' . $data[0]['id'] . '/member/' . $data[$member]['id'] . '/edit">Edit</a></button></td>';
+            echo '<td><form action="/event/' . $data[0]['id'] . '/member/' . $data[$member]['id'] . '" method="post">
+                        <input type="hidden" name="_method" value="delete">
+                        <input type="submit" value="Delete member">
+                  </form></td>';
             echo '</tr>';
         }
     }

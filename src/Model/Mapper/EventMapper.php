@@ -27,6 +27,16 @@ class EventMapper extends Mapper
         return $stmt->fetch();
     }
 
+    public function fetchEventNameById(int $id)
+    {
+        $sql = 'SELECT name FROM event WHERE id = :id LIMIT 1';
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->setFetchMode(PDO::FETCH_COLUMN, 0);
+        $stmt->execute();
+        return $stmt->fetch();
+    }
+
     public function fetchAll(): array
     {
         $sql = 'SELECT * FROM event';
@@ -57,7 +67,6 @@ class EventMapper extends Mapper
         $stmt->bindValue(':description', $data['description'], PDO::PARAM_STR);
         $stmt->bindValue(':id', $data['id'], PDO::PARAM_STR);
         return $stmt->execute();
-
     }
 
     public function doesEventNameExist(string $name)
@@ -83,11 +92,12 @@ class EventMapper extends Mapper
         return ($result === '1');
     }
 
-    public function delete(int $id)
+    public function delete(int $id): int
     {
         $sql = 'DELETE FROM event WHERE id = :id';
         $stmt = $this->connection->prepare($sql);
         $stmt->bindValue(':id', $id, PDO::PARAM_INT);
-        return $stmt->execute();
+        $stmt->execute();
+        return $stmt->rowCount();
     }
 }

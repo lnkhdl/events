@@ -52,7 +52,7 @@ class Router
 
         foreach($routeParts as $index => $part) {
             if (preg_match('/{(.*?)}/', $part)) {
-                $params[substr($routeParts[$index], 1, -1)] = $pathParts[$index];
+                array_push($params, $pathParts[$index]);
             }
         }
 

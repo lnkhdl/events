@@ -12,7 +12,7 @@ class ControllerValidator
         $reflection = new ReflectionMethod('\\App\\Controllers\\' . $controllerClassName, $action);
 
         if (count($parameters) !== count($reflection->getParameters())) {
-            throw new Exception("Number of parameters from path do not match number of parameters expected in the Controller's method.");
+            throw new Exception("Number of parameters from the path does not match number of parameters expected in the Controller's method.");
         }
     }
 }

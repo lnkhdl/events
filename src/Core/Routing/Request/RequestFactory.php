@@ -22,9 +22,11 @@ class RequestFactory
         $request = new Request();
         $request->setPath($path)->setMethod($method);
 
-        if ($method == 'POST' && (!isset($_POST) || $_POST == null)) {
-            throw new Exception('Cannot read POST data.');
-        } else if ($method == 'POST') {
+        if ($method == 'post' || $method == 'put') {
+            if (!isset($_POST) || $_POST == null) {
+                throw new Exception('Cannot read POST data.');
+            }
+
             $request->setPost($_POST);
         }    
 
