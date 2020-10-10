@@ -12,43 +12,50 @@
     }
 ?>
 
-<?php foreach ($data as $event): ?>
-    <hr>
-    <table>
-        <tr>
-            <td>Id</td>
-            <td><a href="<?= '/event/' . $event['id'] ?>"><?= $event['id'] ?></a></td>
-        </tr>
-        <tr>
-            <td>Name</td>
-            <td><?= $event['name'] ?></td>
-        </tr>
-        <tr>
-            <td>City</td>
-            <td><?= $event['city'] ?></td>
-        </tr>
-        <tr>
-            <td>Address</td>
-            <td><?= $event['address'] ?></td>
-        </tr>
-        <tr>
-            <td>Date</td>
-            <td><?= $event['date'] ?></td>
-        </tr>
-        <tr>
-            <td>Description</td>
-            <td><?= $event['description'] ?></td>
-        </tr>
-        <tr>
-            <td>Created at</td>
-            <td><?= $event['created_at'] ?></td>
-        </tr>
-        <tr>
-            <td>Updated at</td>
-            <td><?= $event['updated_at'] ?></td>
-        </tr>
-    </table>
-<?php endforeach ?>
+<?php
+    if (empty($data)) {
+        echo 'No events found.';
+    } else {
+        foreach ($data as $event) {
+            ?>
+            <hr>
+            <table>
+                <tr>
+                    <td>Id</td>
+                    <td><a href="<?= '/event/' . $event['id'] ?>"><?= $event['id'] ?></a></td>
+                </tr>
+                <tr>
+                    <td>Name</td>
+                    <td><?= $event['name'] ?></td>
+                </tr>
+                <tr>
+                    <td>City</td>
+                    <td><?= $event['city'] ?></td>
+                </tr>
+                <tr>
+                    <td>Address</td>
+                    <td><?= $event['address'] ?></td>
+                </tr>
+                <tr>
+                    <td>Date</td>
+                    <td><?= $event['date'] ?></td>
+                </tr>
+                <tr>
+                    <td>Description</td>
+                    <td><?= $event['description'] ?></td>
+                </tr>
+                <tr>
+                    <td>Created at</td>
+                    <td><?= $event['created_at'] ?></td>
+                </tr>
+                <tr>
+                    <td>Updated at</td>
+                    <td><?= $event['updated_at'] ?></td>
+                </tr>
+            </table>
+            <?php
+        }
+    } ?>
 
 <?php
   require_once __DIR__ . '/../_inc/footer.php';

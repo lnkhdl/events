@@ -26,10 +26,8 @@ class EventController extends Controller
     public function index()
     {
         $events = $this->eventService->getAllEvents();
-
-        if ($events) {
-            return $this->response->render('events/index', $events);  
-        }
+        // If no events found, view template will handle it
+        return $this->response->render('events/index', $events);  
     }
 
 
@@ -44,7 +42,7 @@ class EventController extends Controller
             $data = array_merge($data, $members);
             return $this->response->render('events/show', $data);
         } else {
-            throw new \Exception('Page not found', 404);
+            throw new \Exception('Event not found - id: ' . $id . '.', 404);
         }
     }
 
@@ -83,6 +81,8 @@ class EventController extends Controller
             $event->setDate($this->eventService->convertDateToFormFormat($event->getDate()));
             $data = $event->entityToArray();
             return $this->response->render('events/edit', $data);
+        } else {
+            throw new \Exception('Event not found - id: ' . $id . '.', 404);
         }
     }
 

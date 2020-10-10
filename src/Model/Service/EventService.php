@@ -22,7 +22,7 @@ class EventService extends Service
 
     public function getEventNameById(int $id)
     {
-        return  $this->mapper->fetchEventNameById($id);
+        return $this->mapper->fetchEventNameById($id);
     }
 
     public function getAllEvents(): array
@@ -32,9 +32,9 @@ class EventService extends Service
 
     public function saveEvent(array $data): void
     {
-        if (!$this->mapper->doesEventNameExist($data['name'])) {
+        if ($this->mapper->doesEventNameExist($data['name']) === 0) {
             $data['date'] = $this->convertDateToDbFormat($data['date']);
-            if ($this->mapper->insert($data)) {
+            if ($this->mapper->insert($data) === 1) {
                 $this->message['success'] = 'Event saved.';
             } else {
                 $this->message['error'] = 'Error when saving event.';
@@ -46,9 +46,9 @@ class EventService extends Service
 
     public function updateEvent(array $data): void
     {
-        if (!$this->mapper->doesOtherEventWithNameExist($data['name'], (int)$data['id'])) {
+        if ($this->mapper->doesOtherEventWithNameExist($data['name'], (int)$data['id']) === 0) {
             $data['date'] = $this->convertDateToDbFormat($data['date']);
-            if ($this->mapper->update($data)) {
+            if ($this->mapper->update($data) === 1) {
                 $this->message['success'] = 'Event updated.';
             } else {
                 $this->message['error'] = 'Error when updating event.';
@@ -60,7 +60,7 @@ class EventService extends Service
 
     public function deleteEvent(int $id): void
     {
-        if ($this->mapper->delete($id) === 1) {
+        if ($this->mapper->delete($id)) {
             $this->message['success'] = 'Event deleted.';
         } else {
             $this->message['error'] = 'Error when removing event.';

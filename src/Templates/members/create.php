@@ -7,7 +7,7 @@
 
 <?= (isset($errors['error'])) ? '<br><div style="color: red">' . $errors['error'] . '</div><br><br><br>' : ''; ?>
 
-<form action="/member/add" method="post" name="createMemberForm">
+<form action="<?= '/event/' . $data['event_id'] . '/member/add'?>" method="post" name="createMemberForm">
   <?= (isset($errors['first_name'])) ? ('<div style="color: red">' . str_replace('|', '<br>', $errors['first_name'])) . '</div>' : ''; ?>
   <span>First name: </span><br>
   <input type="text" name="first_name" value="<?= (isset($data['first_name'])) ? $data['first_name'] : ''; ?>">

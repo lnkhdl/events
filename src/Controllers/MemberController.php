@@ -26,10 +26,15 @@ class MemberController extends Controller
     {
         $data['event_id'] = $event_id;
         $data['event_name'] = $this->eventService->getEventNameById($event_id);
-        return $this->response->render('members/create', $data);
+
+        if ($data['event_name']) {
+            return $this->response->render('members/create', $data);
+        } else {
+            throw new \Exception('Event not found - id: ' . $event_id . '.', 404);
+        }        
     }
 
-    public function add()
+    public function add(int $event_id)
     {
         $data = $this->request->getPost();
         $validator = new MemberValidator($data);
@@ -50,13 +55,15 @@ class MemberController extends Controller
 
     public function edit(int $event_id, int $id)
     {
-        $member = $this->memberService->getMemberById($id);
+        $member = $this->memberService->getMemberByIdAndEventId($id,$event_id);
 
         if ($member) {
             $data = $member->entityToArray();
             $data['event_id'] = $event_id;
             $data['event_name'] = $this->eventService->getEventNameById($event_id);
             return $this->response->render('members/edit', $data);
+        } else {
+            throw new \Exception('Member or Event not found - member id: ' . $id . ', event id: ' . $event_id . '.', 404);
         }
     }
 

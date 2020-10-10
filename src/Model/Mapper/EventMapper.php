@@ -14,6 +14,7 @@ class EventMapper extends Mapper
         $stmt->bindValue(':id', $id, PDO::PARAM_INT);
         $stmt->setFetchMode(PDO::FETCH_CLASS, 'App\Model\Entity\EventEntity');
         $stmt->execute();
+        // Returns EventEntity or false if nothing found - exception is handled in the controller
         return $stmt->fetch();
     }
 
@@ -45,16 +46,16 @@ class EventMapper extends Mapper
         return $stmt->fetchAll(PDO::FETCH_CLASS, 'App\Model\Entity\EventEntity');    
     }
 
-    public function insert(array $data)
+    public function insert(array $data): int
     {
         $sql = "INSERT INTO event (name, city, address, date, description)
                 VALUES (:name, :city, :address, :date, :description)";
         $stmt= $this->connection->prepare($sql);
-        // execute() returns true on success
-        return $stmt->execute($data);
+        $stmt->execute($data);
+        return $stmt->rowCount();
     }
 
-    public function update(array $data)
+    public function update(array $data): int
     {
         $sql = "UPDATE event
                 SET name = :name, city = :city, address = :address, date = :date, description = :description
@@ -66,38 +67,49 @@ class EventMapper extends Mapper
         $stmt->bindValue(':date', $data['date'], PDO::PARAM_STR);
         $stmt->bindValue(':description', $data['description'], PDO::PARAM_STR);
         $stmt->bindValue(':id', $data['id'], PDO::PARAM_STR);
-        return $stmt->execute();
+        $stmt->execute();
+        return $stmt->rowCount();
     }
 
-    public function doesEventNameExist(string $name)
+    public function doesEventNameExist(string $name): int
     {
         $sql = 'SELECT 1 FROM event WHERE name = :name';
         $stmt = $this->connection->prepare($sql);
         $stmt->bindValue(':name', $name, PDO::PARAM_STR);
         $stmt->execute();
-        $result = $stmt->fetchColumn();
-
-        return ($result === '1');
+        return $stmt->rowCount();
     }
 
-    public function doesOtherEventWithNameExist(string $name, int $id)
+    public function doesOtherEventWithNameExist(string $name, int $id): int
     {
         $sql = 'SELECT 1 FROM event WHERE name = :name AND id <> :id';
         $stmt = $this->connection->prepare($sql);
         $stmt->bindValue(':name', $name, PDO::PARAM_STR);
         $stmt->bindValue(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
-        $result = $stmt->fetchColumn();
-
-        return ($result === '1');
+        return $stmt->rowCount();
     }
 
-    public function delete(int $id): int
+    public function delete(int $id): bool
     {
-        $sql = 'DELETE FROM event WHERE id = :id';
-        $stmt = $this->connection->prepare($sql);
-        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
-        $stmt->execute();
-        return $stmt->rowCount();
+        $this->connection->beginTransaction();
+
+        $sqlMember = 'DELETE FROM member WHERE event_id = :event_id';
+        $stmtMember = $this->connection->prepare($sqlMember);
+        $stmtMember->bindValue(':event_id', $id, PDO::PARAM_INT);
+        $stmtMember->execute();
+
+        $sqlEvent = 'DELETE FROM event WHERE id = :id';
+        $stmtEvent = $this->connection->prepare($sqlEvent);
+        $stmtEvent->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmtEvent->execute();
+        
+        if ($stmtEvent->rowCount() === 1) {
+            $this->connection->commit();
+            return true;
+        } else {
+            $this->connection->rollBack();
+            return false;
+        }
     }
 }

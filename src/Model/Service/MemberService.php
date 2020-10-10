@@ -10,16 +10,16 @@ class MemberService extends Service
         return $this->mapper->fetchByEventId($id);
     }
 
-    public function getMemberById(int $id)
+    public function getMemberByIdAndEventId(int $id, int $event_id)
     {
-        return $this->mapper->fetchById($id);
+        return $this->mapper->fetchByIdAndEventId($id, $event_id);
     }
 
     public function saveMember(array $data): void
     {
-        if (!$this->mapper->doesEmailExists((int)$data['event_id'], $data['email'])) {
+        if ($this->mapper->doesEmailExists((int)$data['event_id'], $data['email']) === 0) {
             unset($data['event_name']);
-            if ($this->mapper->insert($data)) {
+            if ($this->mapper->insert($data) === 1) {
                 $this->message['success'] = 'Member saved.';
             } else {
                 $this->message['error'] = 'Error when saving member.';
@@ -31,8 +31,8 @@ class MemberService extends Service
 
     public function updateMember(array $data): void
     {
-        if (!$this->mapper->doesOtherMemberWithEmailExist((int)$data['event_id'], (int)$data['id'], $data['email'])) {
-            if ($this->mapper->update($data)) {
+        if ($this->mapper->doesOtherMemberWithEmailExist((int)$data['event_id'], (int)$data['id'], $data['email']) === 0) {
+            if ($this->mapper->update($data) === 1) {
                 $this->message['success'] = 'Member updated.';
             } else {
                 $this->message['error'] = 'Error when updating member.';
@@ -44,11 +44,10 @@ class MemberService extends Service
 
     public function deleteMember(int $id): void
     {
-        if ($this->mapper->delete($id) === 1) {
+        if ($this->mapper->deleteMember($id) === 1) {
             $this->message['success'] = 'Member deleted.';
         } else {
             $this->message['error'] = 'Error when removing member.';
         }
     }
-
 }
