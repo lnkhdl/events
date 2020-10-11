@@ -11,7 +11,7 @@ class WebResponse implements ResponseInterface
         $data = $rawData !== [] ? $this->cleanData($rawData) : null;
 
         $template = str_replace('­/', Config::get('DS'), $template);
-        require_once Config::get('TEMPLATE_DIR') . $template . '.php';
+        require_once Config::get('TEMPLATE_DIR') . '/web/' . $template . '.php';
     }
 
     public function redirect(string $location, array $message = []): void

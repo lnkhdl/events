@@ -9,8 +9,8 @@ return [
     'get|/events|EventController|index',
     'get|/event/{int}|EventController|show',
     'get|/event/create|EventController|create',
-    'get|/event/{int}/edit|EventController|edit',
     'post|/event/add|EventController|add',
+    'get|/event/{int}/edit|EventController|edit',
     'put|/event/{int}|EventController|update',
     'delete|/event/{int}|EventController|destroy',
 
@@ -20,5 +20,9 @@ return [
     'put|/event/{int}/member/{int}|MemberController|update',
     'delete|/event/{int}/member/{int}|MemberController|destroy',
 
-    'get|/test/{int}/{string}|PageController|test'
+    'get|/test/{int}/{string}|PageController|test',
+
+    'get|/api/events|EventController|index',
+    'get|/api/event/{int}|EventController|show',
+    'post|/api/event/add|EventController|add',
 ];

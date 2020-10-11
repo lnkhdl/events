@@ -7,13 +7,14 @@ function customHandler($e)
     if (ini_get('display_errors')) {
         logToScreen($e);
     } else {
+        $templatesFolder = substr($_SERVER['REQUEST_URI'], 0, 5) === "/api/" ? '/../src/Templates/api/errors/' : '/../src/Templates/web/errors/';
         if ($e->getCode() === 404) {
             http_response_code(404);
-            include __DIR__ . '/../src/Templates/errors/404.php';
+            include __DIR__ . $templatesFolder . '404.php';
             die();
         } else {
             http_response_code(500);
-            include __DIR__ . '/../src/Templates/errors/500.php';
+            include __DIR__ . $templatesFolder . '500.php';
             die();
         }
     }

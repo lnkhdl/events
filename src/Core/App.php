@@ -32,7 +32,7 @@ class App
         $validator = new ControllerValidator;
         $validator = $validator->validate($currentRoute->getController(), $currentRoute->getAction(), $request->getParameters());
 
-        if ($currentRoute->getMethod() === 'api') {
+        if (substr($currentRoute->getPattern(), 0, 5) === "/api/") {
             $response = new ApiResponse;
         } else {
             $response = new WebResponse;

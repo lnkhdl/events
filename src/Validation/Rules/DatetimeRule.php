@@ -11,8 +11,7 @@ class DatetimeRule extends Rule
 
     public function setError(): void
     {
-        $this->errorMessage = "The field ':name' is not a valid datetime.<br> 
-                               Required format is {$this->dateTimeFormatUser}.";
+        $this->errorMessage = "The field ':name' is not a valid datetime. Required format is {$this->dateTimeFormatUser}.";
     }
 
     public function isValid(): bool

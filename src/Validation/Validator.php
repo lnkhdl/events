@@ -2,6 +2,8 @@
 
 namespace App\Validation;
 
+use Exception;
+
 abstract class Validator
 {
     protected $fields = [];
@@ -12,18 +14,23 @@ abstract class Validator
     public function __construct(array $data)
     {
         $this->fieldsDetails = $this->setFieldsDetails();
-        $this->setFields($data);
-        $this->validate();
+        $this->createFields($data);
+        $this->validateValues();
     }  
     
-    private function setFields(array $data): void
+    private function createFields(array $data): void
     {
         foreach ($this->fieldsDetails as $name => $rules) {
-            $this->fields[$name] = new Field($name, $data[$name], $rules);
+            // Firstly, check that the field is part of the received data - for API
+            if (array_key_exists($name, $data)) {
+                $this->fields[$name] = new Field($name, $data[$name], $rules);
+            } else {
+                throw new Exception('Received data is not complete.', 400);
+            }
         }
     }
 
-    public function validate(): void
+    public function validateValues(): void
     {
         foreach ($this->fields as $field) {
             foreach ($field->rules as $rule) {
