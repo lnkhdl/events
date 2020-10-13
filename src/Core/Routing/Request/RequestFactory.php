@@ -24,10 +24,16 @@ class RequestFactory
 
         if (strtoupper($method) === 'POST' || strtoupper($method) === 'PUT') {
             if (!isset($_POST) || $_POST == null) {
-                throw new Exception('Cannot read POST data.');
-            }
-
-            $request->setPost($_POST);
+                // API
+                $data = json_decode(file_get_contents("php://input"), true);
+                if ($data == false || $data == null) {
+                    throw new Exception('Cannot read POST/PUT data.', 400);
+                } else {
+                    $request->setPost($data);
+                }       
+            } else {
+                $request->setPost($_POST);
+            }            
         }
 
         return $request;

@@ -33,7 +33,6 @@
   <textarea rows="4" cols="50" name="description"><?= (isset($data['description'])) ? $data['description'] : ''; ?></textarea>
   <br><br>
 
-  <input type="hidden" name="id" value="<?= $data['id']?>">
   <input type="hidden" name="_method" value="put">
   <input type="submit" value="Submit">
 </form>

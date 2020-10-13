@@ -9,6 +9,7 @@ use App\Core\Routing\{
 };
 use App\Core\DependencyInjector;
 use App\Validation\MemberValidator;
+use Exception;
 
 class MemberController extends Controller
 {
@@ -30,7 +31,7 @@ class MemberController extends Controller
         if ($data['event_name']) {
             return $this->response->render('members/create', $data);
         } else {
-            throw new \Exception('Event not found - id: ' . $event_id . '.', 404);
+            throw new Exception('Event not found - id: ' . $event_id . '.', 404);
         }        
     }
 
@@ -38,6 +39,9 @@ class MemberController extends Controller
     {
         $data = $this->request->getPost();
         $validator = new MemberValidator($data);
+
+        $data['event_id'] = $event_id;
+        $data['event_name'] = $this->eventService->getEventNameById($event_id);
 
         if (!$validator->hasErrors()) {
             $this->memberService->saveMember($data);
@@ -63,7 +67,7 @@ class MemberController extends Controller
             $data['event_name'] = $this->eventService->getEventNameById($event_id);
             return $this->response->render('members/edit', $data);
         } else {
-            throw new \Exception('Member or Event not found - member id: ' . $id . ', event id: ' . $event_id . '.', 404);
+            throw new Exception('Member or Event not found - member id: ' . $id . ', event id: ' . $event_id . '.', 404);
         }
     }
 
@@ -71,6 +75,9 @@ class MemberController extends Controller
     {
         $data = $this->request->getPost();
         $validator = new MemberValidator($data);
+
+        $data['id'] = $id;
+        $data['event_id'] = $event_id;
 
         if (!$validator->hasErrors()) {
             $this->memberService->updateMember($data);

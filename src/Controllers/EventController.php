@@ -9,6 +9,7 @@ use App\Core\Routing\{
 };
 use App\Core\DependencyInjector;
 use App\Validation\EventValidator;
+use Exception;
 
 class EventController extends Controller
 {
@@ -42,7 +43,7 @@ class EventController extends Controller
             $data = array_merge($data, $members);
             return $this->response->render('events/show', $data);
         } else {
-            throw new \Exception('Event not found - id: ' . $id . '.', 404);
+            throw new Exception('Event not found - id: ' . $id . '.', 404);
         }
     }
 
@@ -82,7 +83,7 @@ class EventController extends Controller
             $data = $event->entityToArray();
             return $this->response->render('events/edit', $data);
         } else {
-            throw new \Exception('Event not found - id: ' . $id . '.', 404);
+            throw new Exception('Event not found - id: ' . $id . '.', 404);
         }
     }
 
@@ -91,6 +92,7 @@ class EventController extends Controller
     {
         $data = $this->request->getPost();
         $validator = new EventValidator($data);
+        $data['id'] = $id;
 
         if (!$validator->hasErrors()) {
             $this->eventService->updateEvent($data);

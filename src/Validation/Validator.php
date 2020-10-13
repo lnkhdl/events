@@ -22,10 +22,11 @@ abstract class Validator
     {
         foreach ($this->fieldsDetails as $name => $rules) {
             // Firstly, check that the field is part of the received data - for API
+            // Not-required field is needed to be part of the data but can be empty
             if (array_key_exists($name, $data)) {
                 $this->fields[$name] = new Field($name, $data[$name], $rules);
             } else {
-                throw new Exception('Received data is not complete.', 400);
+                throw new Exception('Received data is not complete. "' . $name . '" is missing.', 400);
             }
         }
     }

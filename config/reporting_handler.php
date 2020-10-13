@@ -8,14 +8,15 @@ function customHandler($e)
         logToScreen($e);
     } else {
         $templatesFolder = substr($_SERVER['REQUEST_URI'], 0, 5) === "/api/" ? '/../src/Templates/api/errors/' : '/../src/Templates/web/errors/';
-        if ($e->getCode() === 404) {
+        if ($e->getCode() === 400) {
+            http_response_code(400);
+            include __DIR__ . $templatesFolder . '400.php';
+        } elseif ($e->getCode() === 404) {
             http_response_code(404);
             include __DIR__ . $templatesFolder . '404.php';
-            die();
         } else {
             http_response_code(500);
             include __DIR__ . $templatesFolder . '500.php';
-            die();
         }
     }
 

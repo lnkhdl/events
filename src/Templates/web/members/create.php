@@ -23,8 +23,6 @@
   <input type="text" name="email" value="<?= (isset($data['email'])) ? $data['email'] : ''; ?>">
   <br><br>
 
-  <input type="hidden" name="event_id" value="<?= $data['event_id']?>">
-  <input type="hidden" name="event_name" value="<?= $data['event_name']?>">
   <input type="submit" value="Submit">
 </form>
 

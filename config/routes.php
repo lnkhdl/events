@@ -25,4 +25,9 @@ return [
     'get|/api/events|EventController|index',
     'get|/api/event/{int}|EventController|show',
     'post|/api/event/add|EventController|add',
+    'put|/api/event/{int}|EventController|update',
+    'delete|/api/event/{int}|EventController|destroy',
+    'post|/api/event/{int}/member/add|MemberController|add',
+    'put|/api/event/{int}/member/{int}|MemberController|update',
+    'delete|/api/event/{int}/member/{int}|MemberController|destroy',
 ];
