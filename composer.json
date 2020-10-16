@@ -10,6 +10,7 @@
         "phpstan/phpstan": "^0.12.5",
         "codeception/codeception": "^4.0",
         "codeception/module-phpbrowser": "^1.0.0",
-        "codeception/module-asserts": "^1.0.0"
+        "codeception/module-asserts": "^1.0.0",
+        "codeception/module-rest": "^1.2"
     }
 }
