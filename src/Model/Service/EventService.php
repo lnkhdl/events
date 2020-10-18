@@ -48,8 +48,11 @@ class EventService extends Service
     {
         if ($this->mapper->doesOtherEventWithNameExist($data['name'], (int)$data['id']) === 0) {
             $data['date'] = $this->convertDateToDbFormat($data['date']);
-            if ($this->mapper->update($data) === 1) {
+            $result = $this->mapper->update($data);
+            if ($result === 1) {
                 $this->message['success'] = 'Event updated.';
+            } elseif ($result === 0) {
+                $this->message['error'] = 'Nothing has changed.';
             } else {
                 $this->message['error'] = 'Error when updating event.';
             }

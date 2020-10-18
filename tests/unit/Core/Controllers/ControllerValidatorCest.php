@@ -38,7 +38,7 @@ class ControllerValidatorCest
 
     public function incorrect_number_of_parameters_throws_exception(UnitTester $I)
     {
-        $I->expectThrowable(new Exception("Number of parameters from path do not match number of parameters expected in the Controller's method."), function() {
+        $I->expectThrowable(new Exception("Number of parameters from the path does not match number of parameters expected in the Controller's method."), function() {
             $validator = new ControllerValidator;
             $validator->validate('EventController', 'show', ['param1', 'param2']);
         });

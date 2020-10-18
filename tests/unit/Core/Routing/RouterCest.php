@@ -87,7 +87,7 @@ class RouterCest
         });
     }
 
-    public function correct_parameters_are_returned(UnitTester $I)
+    public function correct_parameters_are_returned_different_types(UnitTester $I)
     {
         $requestPath = '/test/1234567890/test123';
         $routePattern = '/test/{int}/{string}';
@@ -96,7 +96,31 @@ class RouterCest
 
         $params = $router->getParameters($requestPath, $routePattern);
 
-        $I->assertSame(array('int' => '1234567890', 'string' => 'test123'), $params);
+        $I->assertSame(array('1234567890','test123'), $params);
+    }
+
+    public function correct_parameters_are_returned_integers(UnitTester $I)
+    {
+        $requestPath = '/test/1234567890/9876543210';
+        $routePattern = '/test/{int}/{int}';
+
+        $router = new Router;
+
+        $params = $router->getParameters($requestPath, $routePattern);
+
+        $I->assertSame(array('1234567890','9876543210'), $params);
+    }
+
+    public function correct_parameters_are_returned_strings(UnitTester $I)
+    {
+        $requestPath = '/test/123test/test123';
+        $routePattern = '/test/{string}/{string}';
+
+        $router = new Router;
+
+        $params = $router->getParameters($requestPath, $routePattern);
+
+        $I->assertSame(array('123test','test123'), $params);
     }
 
     public function empty_parameters_are_returned(UnitTester $I)

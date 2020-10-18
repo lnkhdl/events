@@ -32,8 +32,11 @@ class MemberService extends Service
     public function updateMember(array $data): void
     {
         if ($this->mapper->doesOtherMemberWithEmailExist((int)$data['event_id'], (int)$data['id'], $data['email']) === 0) {
-            if ($this->mapper->update($data) === 1) {
+            $result = $this->mapper->update($data);
+            if ($result === 1) {
                 $this->message['success'] = 'Member updated.';
+            } elseif ($result === 0) {
+                $this->message['error'] = 'Nothing has changed.';
             } else {
                 $this->message['error'] = 'Error when updating member.';
             }
@@ -44,8 +47,11 @@ class MemberService extends Service
 
     public function deleteMember(int $id): void
     {
-        if ($this->mapper->deleteMember($id) === 1) {
+        $result = $this->mapper->deleteMember($id);
+        if ($result === 1) {
             $this->message['success'] = 'Member deleted.';
+        } elseif ($result === 0) {
+            $this->message['error'] = 'Member does not exist.';
         } else {
             $this->message['error'] = 'Error when removing member.';
         }

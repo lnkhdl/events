@@ -6,6 +6,9 @@ namespace Helper;
 
 class Api extends \Codeception\Module
 {
-    public static $eventId1;
-    public static $eventId2;
+    public static $eventId1 = 82;
+    public static $eventId2 = 83;
+
+    public static $memberId1 = 28;
+    public static $memberId2 = 29;
 }

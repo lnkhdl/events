@@ -17,6 +17,8 @@
             }
         }
 
+        http_response_code(200);
+
         if (isset($_SESSION['success'])) {
             $result['message'] = $_SESSION['success'];
             unset($_SESSION['success']);
@@ -25,8 +27,13 @@
         if (isset($_SESSION['error'])) {
             $result['error'] = $_SESSION['error'];
             unset($_SESSION['error']);
+
+            if ($result['error'] === 'Member does not exist.') {
+                http_response_code(404);
+            } else {
+                http_response_code(500);
+            }            
         }
 
-        http_response_code(200);
         echo json_encode($result);
     }

@@ -1,27 +1,21 @@
 <?php
 
-namespace Event;
-
 use ApiTester;
 use Helper\Api;
 
-class AddCest
+class API03_GetEventsCest
 {
-    public function event1_is_created_with_description(ApiTester $I)
+    public function event1_is_returned(ApiTester $I)
     {
-        $I->sendPOST('event/add', [
-          'name' => 'Test_API_01',
-          'city' => 'Test city',
-          'address' => 'Test address',
-          'date' => '01-12-2020 14:30',
-          'description' => 'This is a test description.'
-        ]);
+        $I->haveHttpHeader('Content-Type', 'application/json');
+        $I->sendGET('event/' . API::$eventId1);
 
         $I->seeResponseCodeIs(200);
         $I->seeResponseIsJson();
 
         $I->seeResponseContainsJson([
             'event' => [
+                'id' => API::$eventId1,
                 'name' => 'Test_API_01',
                 'city' => 'Test city',
                 'address' => 'Test address',
@@ -30,36 +24,28 @@ class AddCest
             ],
             'members' => [
                 'message' => 'No members found.'
-            ],
-            'message' => 'Event saved.'
+            ]
         ]);
 
         $I->seeResponseMatchesJsonType([
             'event' => [
-                'id' => 'string:>0',
                 'created_at' => 'string:regex(/^(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})$/)',
                 'updated_at' => 'string:regex(/^(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})$/)'
             ]
         ]);
-
-        list(API::$eventId1) = $I->grabDataFromResponseByJsonPath('$.event.id');
     }
 
-    public function event2_is_created_without_description(ApiTester $I)
+    public function event2_is_returned(ApiTester $I)
     {
-        $I->sendPOST('event/add', [
-          'name' => 'Test_API_02',
-          'city' => 'Test city',
-          'address' => 'Test address',
-          'date' => '31-01-2020 08:30',
-          'description' => ''
-        ]);
+        $I->haveHttpHeader('Content-Type', 'application/json');
+        $I->sendGET('event/' . API::$eventId2);
 
         $I->seeResponseCodeIs(200);
         $I->seeResponseIsJson();
 
         $I->seeResponseContainsJson([
             'event' => [
+                'id' => API::$eventId2,
                 'name' => 'Test_API_02',
                 'city' => 'Test city',
                 'address' => 'Test address',
@@ -68,18 +54,23 @@ class AddCest
             ],
             'members' => [
                 'message' => 'No members found.'
-            ],
-            'message' => 'Event saved.'
+            ]
         ]);
 
         $I->seeResponseMatchesJsonType([
             'event' => [
-                'id' => 'string:>0',
                 'created_at' => 'string:regex(/^(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})$/)',
                 'updated_at' => 'string:regex(/^(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})$/)'
             ]
         ]);
-        
-        list(API::$eventId2) = $I->grabDataFromResponseByJsonPath('$.event.id');
+    }
+
+    public function correct_message_returned_when_getting_nonexisting_event(ApiTester $I)
+    {
+        $I->haveHttpHeader('Content-Type', 'application/json');
+        $I->sendGET('event/0');
+        $I->seeResponseCodeIs(404);
+        $I->seeResponseIsJson();
+        $I->seeResponseEquals('{"message":"Error 404 - The requested resource was not found."}');
     }
 }
