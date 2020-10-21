@@ -89,8 +89,8 @@ class RouterCest
 
     public function correct_parameters_are_returned_different_types(UnitTester $I)
     {
-        $requestPath = '/test/1234567890/test123';
-        $routePattern = '/test/{int}/{string}';
+        $requestPath = '/test/core/1234567890/config/test123';
+        $routePattern = '/test/core/{int}/config/{string}';
 
         $router = new Router;
 

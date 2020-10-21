@@ -6,8 +6,7 @@ use App\Core\Routing\{
     RouteFactory, 
     Router, 
     Request\RequestFactory,
-    Response\ApiResponse,
-    Response\WebResponse
+    Response\Response
 };
 use App\Controllers\ControllerValidator;
 use App\Model\Service\ServiceFactory;
@@ -33,9 +32,9 @@ class App
         $validator = $validator->validate($currentRoute->getController(), $currentRoute->getAction(), $request->getParameters());
 
         if (substr($currentRoute->getPattern(), 0, 5) === "/api/") {
-            $response = new ApiResponse;
+            $response = new Response('api');
         } else {
-            $response = new WebResponse;
+            $response = new Response('web');
         }
 
         $injector = new DependencyInjector;

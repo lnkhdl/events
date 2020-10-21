@@ -3,15 +3,33 @@
 namespace App\Core\Routing\Response;
 
 use App\Core\Config;
+use Exception;
 
-class ApiResponse implements ResponseInterface
+class Response implements ResponseInterface
 {
+    public $type = '';
+
+    public function __construct(string $type)
+    {
+        $this->setType($type);
+    }
+
+    private function setType(string $type) {
+        if ($type == 'web') {
+            $this->type = 'web';
+        } elseif ($type == 'api') {
+            $this->type = 'api';
+        } else {
+            throw new Exception($type . ' response type is not supported.', 500);
+        }
+    }
+
     public function render(string $template, $rawData = [], array $errors = []): void
     {
         $data = $rawData !== [] ? $this->cleanData($rawData) : null;
 
         $template = str_replace('­/', Config::get('DS'), $template);
-        require_once Config::get('TEMPLATE_DIR') . '/api/' . $template . '.php';
+        require_once Config::get('TEMPLATE_DIR') . '/' . $this->type . '/' . $template . '.php';
     }
 
     public function redirect(string $location, array $message = []): void
@@ -19,11 +37,16 @@ class ApiResponse implements ResponseInterface
         $_SESSION['success'] = isset($message['success']) ? $message['success'] : null;
         $_SESSION['error'] = isset($message['error']) ? $message['error'] : null;
 
-        header('Location: ' . '/api' . $location);
+        if ($this->type === 'api') {
+            header('Location: ' . '/api' . $location);
+        } else {
+            header('Location: ' . $location);
+        }       
+        
         die();
     }
 
-    private function cleanData($rawData)
+    public function cleanData($rawData)
     {
         if (is_array($rawData)) {
             foreach ($rawData as $key => $value) {   
@@ -42,5 +65,4 @@ class ApiResponse implements ResponseInterface
         }
         return htmlentities($rawData, ENT_QUOTES);
     }
-
 }

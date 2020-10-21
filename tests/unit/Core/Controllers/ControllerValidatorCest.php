@@ -6,7 +6,6 @@ use UnitTester;
 use App\Controllers\ControllerValidator;
 use Exception;
 
-
 class ControllerValidatorCest
 {
     public function _before(UnitTester $I)

@@ -6,5 +6,5 @@ namespace Helper;
 
 class Unit extends \Codeception\Module
 {
-
+    public static $documentRoot = 'C:\\xampp\htdocs\\+Projects\\PHP\\PHP_MyEvents\\';
 }

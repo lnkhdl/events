@@ -12,8 +12,8 @@ class DependencyInjector
         $this->dependencies[$name] = $object;
     }
 
-    public function get(string $name)
+    public function get(string $name): object
     {
-        return $this->dependencies[$name] ?? null;
+        return $this->dependencies[$name];
     }
 }
