@@ -17,7 +17,7 @@ class RouteFactoryCest
     {
         $definedRoutes = [
             'get|/|PageController|index',
-            'delete|/event/{int}|EventController|destroy'
+            'delete|/api/event/{int}/member/{int}|MemberController|destroy'
         ];
 
         $routeFactory = new RouteFactory;
@@ -34,8 +34,8 @@ class RouteFactoryCest
 
         $I->assertInstanceOf(Route::class, $routes[1]);
         $I->assertSame('DELETE', $routes[1]->getMethod());
-        $I->assertSame('/event/{int}', $routes[1]->getPattern());
-        $I->assertSame('EventController', $routes[1]->getController());
+        $I->assertSame('/api/event/{int}/member/{int}', $routes[1]->getPattern());
+        $I->assertSame('MemberController', $routes[1]->getController());
         $I->assertSame('destroy', $routes[1]->getAction());
     }
 }

@@ -1,5 +1,6 @@
 <?php
     $result = [];
+    $result['message'] = '';
     http_response_code(200);
 
     if (isset($_SESSION['success'])) {
@@ -8,7 +9,7 @@
     }
 
     if (empty($data)) {
-        array_push($result['message'], 'No events found.');
+        $result['message'] .= $result['message'] === '' ? 'No events found.' : ' No events found.';
         echo json_encode($result);
     } else {
         $result['events'] = $data;

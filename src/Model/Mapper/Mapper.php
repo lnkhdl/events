@@ -7,7 +7,7 @@ abstract class Mapper
 {
     protected $connection;
 
-    public function __construct($connection)
+    public function __construct(\PDO $connection)
     {
         $this->connection = $connection;
     }

@@ -1,18 +1,15 @@
-actor: ApiTester
+actor: IntegrationTester
 modules:
     enabled:
-        - REST:
-            url: http://event.test/api/
-            depends: PhpBrowser
-            part: Json
-        - \Helper\Api
+        - \Helper\Integration
+        - Asserts
         - Db
     config:
         Db:
             dsn: 'mysql:host=localhost;dbname=php_events_tests'
             user: 'root'
             password: ''
-            reconnect: false
+            reconnect: true
             dump: 'tests/_data/test_db_dump.sql'
             populate: true
             cleanup: false

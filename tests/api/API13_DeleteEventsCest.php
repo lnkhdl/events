@@ -40,7 +40,7 @@ class API13_DeleteEventsCest
         $I->sendDELETE('event/' . API::$eventId2);
         $I->seeResponseCodeIs(200);
         $I->seeResponseIsJson();
-        $I->seeResponseContains('"message":"Event deleted."');
+        $I->seeResponseContains('"message":"Event deleted. No events found."');
         
         $I->dontSeeResponseContainsJson([
             'events' => [

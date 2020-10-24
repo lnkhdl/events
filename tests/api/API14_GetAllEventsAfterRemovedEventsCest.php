@@ -13,6 +13,8 @@ class API14_GetAllEventsAfterRemovedEventsCest
         $I->seeResponseCodeIs(200);
         $I->seeResponseIsJson();
 
+        $I->seeResponseContains('"message":"No events found."');
+
         $I->dontSeeResponseContainsJson([
             'events' => [
                 'id' => API::$eventId1,

@@ -15,9 +15,10 @@ abstract class Entity
         return $this->id;
     }
 
-    public function setId($id)
+    public function setId(string $id): Entity
     {
         $this->id = $id;
+        return $this;
     }
 
     public function getCreatedAt(): string
@@ -25,9 +26,10 @@ abstract class Entity
         return $this->created_at;
     }
 
-    public function setCreatedAt(string $date)
+    public function setCreatedAt(string $date): Entity
     {
         $this->created_at = $date;
+        return $this;
     }
 
     public function getUpdatedAt(): string
@@ -35,9 +37,10 @@ abstract class Entity
         return $this->updated_at;
     }
 
-    public function setUpdatedAt(string $date)
+    public function setUpdatedAt(string $date): Entity
     {
         $this->updated_at = $date;
+        return $this;
     }
 
     public function hydrateArray(array $data)

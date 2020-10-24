@@ -16,9 +16,10 @@ class EventEntity extends Entity
         return $this->name;
     }
 
-    public function setName(string $name)
+    public function setName(string $name): EventEntity
     {
         $this->name = $name;
+        return $this;
     }
 
     public function getCity(): string
@@ -26,9 +27,10 @@ class EventEntity extends Entity
         return $this->city;
     }
 
-    public function setCity(string $city)
+    public function setCity(string $city): EventEntity
     {
         $this->city = $city;
+        return $this;
     }
 
     public function getAddress(): string
@@ -36,9 +38,10 @@ class EventEntity extends Entity
         return $this->address;
     }
 
-    public function setAddress(string $address)
+    public function setAddress(string $address): EventEntity
     {
         $this->address = $address;
+        return $this;
     }
 
     public function getDate(): string
@@ -46,9 +49,10 @@ class EventEntity extends Entity
         return $this->date;
     }
 
-    public function setDate(string $date)
+    public function setDate(string $date): EventEntity
     {
         $this->date = $date;
+        return $this;
     }
 
     public function getDescription(): string
@@ -56,14 +60,15 @@ class EventEntity extends Entity
         return $this->description;
     }
 
-    public function setDescription(string $description)
+    public function setDescription(string $description): EventEntity
     {
         $this->description = $description;
+        return $this;
     }
 
     public function entityToArray(): array
     {
-        $data[] = null;
+        $data = [];
         $data['name'] = $this->getName();
         $data['city'] = $this->getCity();
         $data['address'] = $this->getAddress();
@@ -72,6 +77,17 @@ class EventEntity extends Entity
 
         $data = parent::hydrateArray($data);
 
+        return $data;
+    }
+
+    public function entitySpecificPropertiesToArray(): array
+    {
+        $data = [];
+        $data['name'] = $this->getName();
+        $data['city'] = $this->getCity();
+        $data['address'] = $this->getAddress();
+        $data['date'] = $this->getDate();
+        $data['description'] = $this->getDescription();
         return $data;
     }
 }

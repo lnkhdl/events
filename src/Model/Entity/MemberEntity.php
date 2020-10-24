@@ -15,9 +15,10 @@ class MemberEntity extends Entity
         return $this->first_name;
     }
 
-    public function setFirstName(string $first_name)
+    public function setFirstName(string $first_name): MemberEntity
     {
         $this->first_name = $first_name;
+        return $this;
     }
 
     public function getLastName(): string
@@ -25,9 +26,10 @@ class MemberEntity extends Entity
         return $this->last_name;
     }
 
-    public function setLastName(string $last_name)
+    public function setLastName(string $last_name): MemberEntity
     {
         $this->last_name = $last_name;
+        return $this;
     }
 
     public function getEmail(): string
@@ -35,9 +37,10 @@ class MemberEntity extends Entity
         return $this->email;
     }
 
-    public function setEmail(string $email)
+    public function setEmail(string $email): MemberEntity
     {
         $this->email = $email;
+        return $this;
     }
 
     public function getEventId(): string
@@ -45,9 +48,10 @@ class MemberEntity extends Entity
         return $this->event_id;
     }
 
-    public function setEventId(string $event_id)
+    public function setEventId(string $event_id): MemberEntity
     {
         $this->event_id = $event_id;
+        return $this;
     }
 
     public function entityToArray(): array

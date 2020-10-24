@@ -2,8 +2,6 @@
 
 namespace App\Model\Mapper;
 
-use ReflectionClass;
-
 class MapperFactory
 {
     private $connection;

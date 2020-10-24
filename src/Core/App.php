@@ -14,7 +14,7 @@ use Exception;
 
 class App
 {
-    public static function boot()
+    public static function boot(string $env)
     {
         $definedRoutes = require_once Config::get('ROUTES_FILE');
         $routeFactory = new RouteFactory;
@@ -39,8 +39,7 @@ class App
 
         $injector = new DependencyInjector;
 
-        $dbConfig = require Config::get('DATABASE_DETAILS');
-        $pdoStorage = new PdoStorage($dbConfig['DB_HOST'], $dbConfig['DB_NAME'], $dbConfig['DB_USER'], $dbConfig['DB_PASS']);
+        $pdoStorage = new PdoStorage($env);
         $injector->set('Storage', $pdoStorage);
 
         $serviceFactory = new ServiceFactory($pdoStorage);
