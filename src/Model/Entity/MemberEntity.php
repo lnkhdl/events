@@ -54,15 +54,17 @@ class MemberEntity extends Entity
         return $this;
     }
 
-    public function entityToArray(): array
+    public function entityToArray(bool $specificOnly = false): array
     {
-        $data[] = null;
+        $data = [];
         $data['first_name'] = $this->getFirstName();
         $data['last_name'] = $this->getLastName();
         $data['email'] = $this->getEmail();
         $data['event_id'] = $this->getEventId();
 
-        $data = parent::hydrateArray($data);
+        if (!$specificOnly) {
+            $data = parent::hydrateArray($data);
+        }
 
         return $data;
     }

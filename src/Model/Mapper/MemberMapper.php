@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\Model\Mapper;
 
-use App\Model\Entity\MemberEntity;
 use PDO;
 
 class MemberMapper extends Mapper

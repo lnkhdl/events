@@ -66,7 +66,7 @@ class EventEntity extends Entity
         return $this;
     }
 
-    public function entityToArray(): array
+    public function entityToArray(bool $specificOnly = false): array
     {
         $data = [];
         $data['name'] = $this->getName();
@@ -75,19 +75,10 @@ class EventEntity extends Entity
         $data['date'] = $this->getDate();
         $data['description'] = $this->getDescription();
 
-        $data = parent::hydrateArray($data);
+        if (!$specificOnly) {
+            $data = parent::hydrateArray($data);
+        }
 
-        return $data;
-    }
-
-    public function entitySpecificPropertiesToArray(): array
-    {
-        $data = [];
-        $data['name'] = $this->getName();
-        $data['city'] = $this->getCity();
-        $data['address'] = $this->getAddress();
-        $data['date'] = $this->getDate();
-        $data['description'] = $this->getDescription();
         return $data;
     }
 }

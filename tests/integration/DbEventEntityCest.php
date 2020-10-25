@@ -1,7 +1,6 @@
 <?php
 
 use App\Model\Entity\EventEntity;
-use Helper\Integration;
 
 class DbEventEntityCest
 {
@@ -16,6 +15,7 @@ class DbEventEntityCest
         return $testEntity;
     }
 
+    
     private function getTestEntity2(): EventEntity
     {
         $testEntity = new EventEntity;
@@ -42,7 +42,7 @@ class DbEventEntityCest
     {
         $mapper = $I->createMapper('EventMapper');
         $expectedEntity = $this->getTestEntity1();
-        $expectedEntityArray = $expectedEntity->entitySpecificPropertiesToArray();
+        $expectedEntityArray = $expectedEntity->entityToArray(true);
         $result = $mapper->insert($expectedEntityArray);
 
         $I->assertIsInt($result);
@@ -63,7 +63,7 @@ class DbEventEntityCest
     {
         $mapper = $I->createMapper('EventMapper');
         $expectedEntity = $this->getTestEntity2();
-        $expectedEntityArray = $expectedEntity->entitySpecificPropertiesToArray();
+        $expectedEntityArray = $expectedEntity->entityToArray(true);
         $result = $mapper->insert($expectedEntityArray);
 
         $I->assertIsInt($result);
@@ -82,6 +82,42 @@ class DbEventEntityCest
 
     /**
      * @depends event1_is_inserted
+     * @depends event2_is_inserted
+     */
+    public function events_are_returned_when_fetching_all(IntegrationTester $I)
+    {
+        $mapper = $I->createMapper('EventMapper');
+        $result = $mapper->fetchAll();
+        $expectedEntity1 = $this->getTestEntity1();
+        $expectedEntity2 = $this->getTestEntity2();
+
+        $I->assertIsArray($result);
+        $I->assertSame(count($result), 2);
+
+        $I->assertInstanceOf(get_class($expectedEntity1), $result[0]);
+        $I->assertSame('1', $result[0]->getId());
+        $I->assertSame($expectedEntity1->getName(), $result[0]->getName());
+        $I->assertSame($expectedEntity1->getCity(), $result[0]->getCity());
+        $I->assertSame($expectedEntity1->getAddress(), $result[0]->getAddress());
+        $I->assertSame($expectedEntity1->getDate(), $result[0]->getDate());
+        $I->assertSame($expectedEntity1->getDescription(), $result[0]->getDescription());
+        $I->assertSame(date('Y-m-d'), date_format(date_create_from_format('Y-m-d H:i:s', $result[0]->getCreatedAt()), 'Y-m-d'));
+        $I->assertSame(date('Y-m-d'), date_format(date_create_from_format('Y-m-d H:i:s', $result[0]->getUpdatedAt()), 'Y-m-d'));
+
+        $I->assertInstanceOf(get_class($expectedEntity2), $result[1]);
+        $I->assertSame('2', $result[1]->getId());
+        $I->assertSame($expectedEntity2->getName(), $result[1]->getName());
+        $I->assertSame($expectedEntity2->getCity(), $result[1]->getCity());
+        $I->assertSame($expectedEntity2->getAddress(), $result[1]->getAddress());
+        $I->assertSame($expectedEntity2->getDate(), $result[1]->getDate());
+        $I->assertSame($expectedEntity2->getDescription(), $result[1]->getDescription());
+        $I->assertSame(date('Y-m-d'), date_format(date_create_from_format('Y-m-d H:i:s', $result[1]->getCreatedAt()), 'Y-m-d'));
+        $I->assertSame(date('Y-m-d'), date_format(date_create_from_format('Y-m-d H:i:s', $result[1]->getUpdatedAt()), 'Y-m-d'));
+    }
+
+
+    /**
+     * @depends event1_is_inserted
      */
     public function entity_is_returned_when_fetching_by_existing_event_id(IntegrationTester $I)
     {
@@ -90,6 +126,7 @@ class DbEventEntityCest
         $expectedEntity = $this->getTestEntity1();
 
         $I->assertInstanceOf(get_class($expectedEntity), $result);
+        $I->assertSame('1', $result->getId());
         $I->assertSame($expectedEntity->getName(), $result->getName());
         $I->assertSame($expectedEntity->getCity(), $result->getCity());
         $I->assertSame($expectedEntity->getAddress(), $result->getAddress());
@@ -120,6 +157,7 @@ class DbEventEntityCest
         $expectedEntity = $this->getTestEntity1();
 
         $I->assertInstanceOf(get_class($expectedEntity), $result);
+        $I->assertSame('1', $result->getId());
         $I->assertSame($expectedEntity->getName(), $result->getName());
         $I->assertSame($expectedEntity->getCity(), $result->getCity());
         $I->assertSame($expectedEntity->getAddress(), $result->getAddress());
@@ -165,40 +203,6 @@ class DbEventEntityCest
 
     /**
      * @depends event1_is_inserted
-     * @depends event2_is_inserted
-     */
-    public function events_are_returned_when_fetching_all(IntegrationTester $I)
-    {
-        $mapper = $I->createMapper('EventMapper');
-        $result = $mapper->fetchAll();
-        $expectedEntity1 = $this->getTestEntity1();
-        $expectedEntity2 = $this->getTestEntity2();
-
-        $I->assertIsArray($result);
-        $I->assertSame(count($result), 2);
-
-        $I->assertInstanceOf(get_class($expectedEntity1), $result[0]);
-        $I->assertSame($expectedEntity1->getName(), $result[0]->getName());
-        $I->assertSame($expectedEntity1->getCity(), $result[0]->getCity());
-        $I->assertSame($expectedEntity1->getAddress(), $result[0]->getAddress());
-        $I->assertSame($expectedEntity1->getDate(), $result[0]->getDate());
-        $I->assertSame($expectedEntity1->getDescription(), $result[0]->getDescription());
-        $I->assertSame(date('Y-m-d'), date_format(date_create_from_format('Y-m-d H:i:s', $result[0]->getCreatedAt()), 'Y-m-d'));
-        $I->assertSame(date('Y-m-d'), date_format(date_create_from_format('Y-m-d H:i:s', $result[0]->getUpdatedAt()), 'Y-m-d'));
-
-        $I->assertInstanceOf(get_class($expectedEntity2), $result[1]);
-        $I->assertSame($expectedEntity2->getName(), $result[1]->getName());
-        $I->assertSame($expectedEntity2->getCity(), $result[1]->getCity());
-        $I->assertSame($expectedEntity2->getAddress(), $result[1]->getAddress());
-        $I->assertSame($expectedEntity2->getDate(), $result[1]->getDate());
-        $I->assertSame($expectedEntity2->getDescription(), $result[1]->getDescription());
-        $I->assertSame(date('Y-m-d'), date_format(date_create_from_format('Y-m-d H:i:s', $result[1]->getCreatedAt()), 'Y-m-d'));
-        $I->assertSame(date('Y-m-d'), date_format(date_create_from_format('Y-m-d H:i:s', $result[1]->getUpdatedAt()), 'Y-m-d'));
-    }
-
-
-    /**
-     * @depends event1_is_inserted
      */
     public function existing_event_is_found_based_on_name(IntegrationTester $I)
     {
@@ -232,6 +236,7 @@ class DbEventEntityCest
         $I->assertSame(1, $result);
     }
 
+
     /**
      * @depends event1_is_inserted
      */
@@ -252,7 +257,7 @@ class DbEventEntityCest
     {
         $mapper = $I->createMapper('EventMapper');
         $expectedEntity = $this->getTestEntity1(' UP');
-        $expectedEntityArray = $expectedEntity->entitySpecificPropertiesToArray();
+        $expectedEntityArray = $expectedEntity->entityToArray(true);
         $expectedEntityArray['date'] = '2020-10-19 23:59:00';
         $expectedEntityArray['id'] = '1';
         $result = $mapper->update($expectedEntityArray);
@@ -304,6 +309,7 @@ class DbEventEntityCest
         $I->assertSame(count($result), 2);
 
         $I->assertInstanceOf(get_class($expectedEntity1), $result[0]);
+        $I->assertSame('1', $result[0]->getId());
         $I->assertSame($expectedEntity1->getName() . ' UP', $result[0]->getName());
         $I->assertSame($expectedEntity1->getCity() . ' UP', $result[0]->getCity());
         $I->assertSame($expectedEntity1->getAddress() . ' UP', $result[0]->getAddress());
@@ -313,6 +319,7 @@ class DbEventEntityCest
         $I->assertSame(date('Y-m-d'), date_format(date_create_from_format('Y-m-d H:i:s', $result[0]->getUpdatedAt()), 'Y-m-d'));
 
         $I->assertInstanceOf(get_class($expectedEntity2), $result[1]);
+        $I->assertSame('2', $result[1]->getId());
         $I->assertSame($expectedEntity2->getName(), $result[1]->getName());
         $I->assertSame($expectedEntity2->getCity(), $result[1]->getCity());
         $I->assertSame($expectedEntity2->getAddress(), $result[1]->getAddress());
@@ -364,6 +371,7 @@ class DbEventEntityCest
         $I->assertSame(count($result), 1);
 
         $I->assertInstanceOf(get_class($expectedEntity2), $result[0]);
+        $I->assertSame('2', $result[0]->getId());
         $I->assertSame($expectedEntity2->getName(), $result[0]->getName());
         $I->assertSame($expectedEntity2->getCity(), $result[0]->getCity());
         $I->assertSame($expectedEntity2->getAddress(), $result[0]->getAddress());
