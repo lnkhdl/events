@@ -3,109 +3,80 @@
   require_once __DIR__ . '/../_inc/navbar.php';
 ?>
 
-<h3 style="color: red">Show event</h3>
+<main>
+    <section class="single-event">
 
-<button><a href="<?= '/event/' . $data[0]['id'] . '/edit' ?>">Edit event</a></button>
-<button><a href="<?= '/event/' . $data[0]['id'] . '/member/create' ?>">Add new member</a></button>
+    <h2><?= $data[0]['name'] ?></h2>
 
-<form action="<?= '/event/'. $data[0]['id'] ?>" method="post">
-    <input type="hidden" name="_method" value="delete">
-    <input type="submit" value="Delete event">
-</form>
+    <img src="/../assets/img/icon_place.png" alt="place icon" class="place-img"/>
+    <span class="city"><?= $data[0]['city'] ?></span>
+    <span class="address"><?= $data[0]['address'] ?></span>
 
-<?php
-    if (!empty($_SESSION['success'])) {
-        echo '<div style="color: green; padding-top: 10px; padding-bottom: 10px;"><b>! ! !' . $_SESSION['success'] . '! ! !</></div>';
-        unset($_SESSION['success']);
-    }
-    if (!empty($_SESSION['error'])) {
-        echo '<div style="color: red; padding-top: 10px; padding-bottom: 10px;"><b>! ! !' . $_SESSION['error'] . '! ! !</></div>';
-        unset($_SESSION['error']);
-    }
-?>
+    <img src="/../assets/img/icon_calendar.png" alt="calendar icon" class="date-img"/>
+    <span class="date"><?= $data[0]['date'] ?></span>
 
-<h4 style="color: blue">Event details:</h4>
-<table>
-    <tr>
-        <td>Id</td>
-        <td><?= $data[0]['id'] ?></td>
-    </tr>
-    <tr>
-        <td>Name</td>
-        <td><?= $data[0]['name'] ?></td>
-    </tr>
-    <tr>
-        <td>City</td>
-        <td><?= $data[0]['city'] ?></td>
-    </tr>
-    <tr>
-        <td>Address</td>
-        <td><?= $data[0]['address'] ?></td>
-    </tr>
-    <tr>
-        <td>Date</td>
-        <td><?= $data[0]['date'] ?></td>
-    </tr>
-    <tr>
-        <td>Description</td>
-        <td><?= $data[0]['description'] ?></td>
-    </tr>
-    <tr>
-        <td>Created at</td>
-        <td><?= $data[0]['created_at'] ?></td>
-    </tr>
-    <tr>
-        <td>Updated at</td>
-        <td><?= $data[0]['updated_at'] ?></td>
-    </tr>
-</table>
+    <a href="<?= '/event/' . $data[0]['id'] . '/member/create' ?>" class="add-btn">Add member</a>
+    <a href="<?= '/event/' . $data[0]['id'] . '/edit' ?>" class="edit-btn">Edit event</a>
 
-<h4 style="color: blue">Members details:</h4>
-<?php
-    if (empty($data[1]['id'])) {
-        echo 'No members found.';
-    } else {
-        ?>
-        <table style="border: 1px solid black;">
-            <thead>
-                <tr>
-                    <th>id</th>
-                    <th>first_name</th>
-                    <th>last_name</th>
-                    <th>email</th>
-                    <th>event_id</th>
-                    <th>created_at</th>
-                    <th>updated_at</th>
-                    <th>edit</th>
-                    <th>delete</th>
-                </tr>
-            </thead>
+    <form action="<?= '/event/'. $data[0]['id'] ?>" method="post" class="delete-form">
+        <input type="hidden" name="_method" value="delete">
+        <input class="delete-btn" type="submit" value="Delete event">
+    </form>
+
+    <?php
+        if (!empty($_SESSION['success'])) {
+            echo '<div style="color: green; padding-top: 10px; padding-bottom: 10px;"><b>! ! !' . $_SESSION['success'] . '! ! !</></div>';
+            unset($_SESSION['success']);
+        }
+        if (!empty($_SESSION['error'])) {
+            echo '<div style="color: red; padding-top: 10px; padding-bottom: 10px;"><b>! ! !' . $_SESSION['error'] . '! ! !</></div>';
+            unset($_SESSION['error']);
+        }
+    ?>
+
+    <p class="description">
+        <?= $data[0]['description'] ?>
+    </p>
+
+    <div class="members-tbl">
+        <h2>List of Members</h2>
         <?php
-            // start from 1 because the first part of the data array is the event data used above
-            for ($member = 1; $member <= count($data)-1; $member++) {
+            if (empty($data[1]['id'])) {
+                echo '<h4>There are currently no members registered to this event.</h4>';
+            } else {
                 ?>
-                <tr>
-                    <td><?= $data[$member]['id'] ?></td>
-                    <td><?= $data[$member]['first_name'] ?></td>
-                    <td><?= $data[$member]['last_name'] ?></td>
-                    <td><?= $data[$member]['email'] ?></td>
-                    <td><?= $data[$member]['event_id'] ?></td>
-                    <td><?= $data[$member]['created_at'] ?></td>
-                    <td><?= $data[$member]['updated_at'] ?></td>
-                    <td>
-                        <button><a href="<?= '/event/' . $data[0]['id'] . '/member/' . $data[$member]['id'] . '/edit' ?>">Edit</a></button>
-                    </td>
-                    <td>
-                        <form action="<?= '/event/' . $data[0]['id'] . '/member/' . $data[$member]['id'] ?>" method="post">
-                            <input type="hidden" name="_method" value="delete">
-                            <input type="submit" value="Delete member">
-                        </form>
-                    </td>
-                </tr>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>First name</th>
+                            <th>Last name</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                <?php
+                    // start from 1 because the first part of the data array is the event data used above
+                    for ($member = 1; $member <= count($data)-1; $member++) {
+                        ?>
+                        <tr>
+                            <td><?= $data[$member]['first_name'] ?></td>
+                            <td><?= $data[$member]['last_name'] ?></td>
+                            <td>
+                                <a href="<?= '/event/' . $data[0]['id'] . '/member/' . $data[$member]['id'] . '/edit' ?>">Edit</a>
+                            </td>
+                            <td>
+                                <form action="<?= '/event/' . $data[0]['id'] . '/member/' . $data[$member]['id'] ?>" method="post">
+                                    <input type="hidden" name="_method" value="delete">
+                                    <input class="input-to-btn member-delete-btn" type="submit" value="Delete">
+                                </form>
+                            </td>
+                        </tr>
+                    <?php } ?>
+                </table>
             <?php } ?>
-        </table>
-    <?php } ?>
-
+    </div>
+    </section>
+</main>
 <?php
   require_once __DIR__ . '/../_inc/footer.php';
 ?>

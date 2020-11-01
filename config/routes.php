@@ -1,8 +1,8 @@
 <?php
 
 return [
-    'get|/|PageController|index',
-    'get|/index|PageController|index',
+    'get|/|EventController|index',
+    'get|/index|EventController|index',
     'get|/about|PageController|about',
     'get|/contact|PageController|contact',
 

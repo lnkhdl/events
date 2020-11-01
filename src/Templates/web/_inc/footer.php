@@ -1,5 +1,6 @@
-<br><br><br>
-<hr>
-<br>
+<footer>2020 © LNKHDL</footer>
+    </div>
 
-<p>Footer</p>
+    <script src="/../assets/js/main.js"></script>
+</body>
+</html>

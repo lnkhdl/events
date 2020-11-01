@@ -5,11 +5,6 @@ namespace App\Controllers;
 
 class PageController extends Controller
 {
-    public function index()
-    {
-        return $this->response->render('index');
-    }
-
     public function about()
     {
         return $this->response->render('about');
