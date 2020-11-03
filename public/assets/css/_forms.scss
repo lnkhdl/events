@@ -1,0 +1,28 @@
+@mixin position {
+    margin-top: 0.2em;
+    margin-bottom: 2em;
+    padding-left: 0.8em;
+    width: 100%;
+}
+
+.form form input[type=text] {
+    @include position;
+    height: 3em;
+    border: 1px solid $color-primary;
+}
+
+.form form textarea {
+    @include position;
+    padding-top: 0.5em;
+    border: 1px solid $color-primary;
+}
+
+.form form input[type=submit] {
+    @include position;
+    margin-bottom: 0.5em;
+}
+
+.form form label {
+    font-weight: 700;
+    color: $color-primary;
+}

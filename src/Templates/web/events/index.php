@@ -4,7 +4,7 @@
 ?>
 
 <main>
-    <section class="events-tbl">
+    <section class="tbl events-tbl">
     
 
         <?php

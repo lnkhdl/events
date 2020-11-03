@@ -38,7 +38,7 @@
         <?= $data[0]['description'] ?>
     </p>
 
-    <div class="members-tbl">
+    <div class="tbl members-tbl">
         <h2>List of Members</h2>
         <?php
             if (empty($data[1]['id'])) {

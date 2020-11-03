@@ -1,0 +1,71 @@
+.single-event {
+    margin-top: 1em;
+    font-size: 1.2rem;
+    display: grid;
+    grid-gap: 1em;
+    grid-template-columns: 1em 1fr;
+    grid-template-rows: auto;
+    grid-template-areas: 
+        "event-name event-name"
+        "place-img city-text"
+        ". address-text"
+        "date-img date-text"
+        "add-btn add-btn"
+        "edit-btn edit-btn"
+        "description description"
+        "members members"
+        "delete-form delete-form";
+
+    h2 {
+        grid-area: event-name;
+        margin: 0;
+    }
+
+    .place-img {
+        grid-area: place-img;
+    }
+
+    .city {
+        grid-area: city-text;
+    }
+
+    .address {
+        grid-area: address-text;
+    }
+
+    .date-img {
+        grid-area: date-img;
+    }
+
+    .date {
+        grid-area: date-text;
+    }
+
+    .add-btn {
+        margin-top: 1.5em;
+        grid-area: add-btn;
+    }
+
+    .edit-btn {
+        grid-area: edit-btn;
+    }
+
+    .delete-form {
+        grid-area: delete-form;
+    }
+
+    .delete-btn {
+        width: 100%;
+    }
+
+    .description {
+        grid-area: description;
+        font-size: 1.2rem;
+        text-align: justify;
+        line-height: 150%;
+    }
+
+    .members-tbl {
+        grid-area: members;
+    }
+}
