@@ -12,7 +12,7 @@
 
 <header>
     <img src="/../assets/img/icon_header.png" alt="events header icon" class="header-icon" />
-    <h1><a href="#">events.test</a></h1>
+    <h1><a href="/">events.test</a></h1>
     <p>
         Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
         Quisque tincidunt scelerisque libero. Mauris tincidunt sem sed arcu.

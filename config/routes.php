@@ -15,8 +15,8 @@ return [
     'delete|/event/{int}|EventController|destroy',
 
     'get|/event/{int}/member/create|MemberController|create',
-    'get|/event/{int}/member/{int}/edit|MemberController|edit',
     'post|/event/{int}/member/add|MemberController|add',
+    'get|/event/{int}/member/{int}/edit|MemberController|edit',
     'put|/event/{int}/member/{int}|MemberController|update',
     'delete|/event/{int}/member/{int}|MemberController|destroy',
 

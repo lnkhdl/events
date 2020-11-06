@@ -89,7 +89,7 @@ class MemberController extends Controller
             }
         }
 
-        return $this->response->render('events/edit', $data, $validator->getErrors());
+        return $this->response->render('members/edit', $data, $validator->getErrors());
     }
 
     public function destroy(int $event_id, int $id)

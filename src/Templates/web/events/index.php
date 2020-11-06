@@ -5,11 +5,10 @@
 
 <main>
     <section class="tbl events-tbl">
-    
 
         <?php
             if (!empty($_SESSION['success'])) {
-                echo '<div style="color: green; padding-top: 10px; padding-bottom: 10px;"><b>! ! !' . $_SESSION['success'] . '! ! !</></div>';
+                echo '<div class="success-msg">' . $_SESSION['success'] . '</div>';
                 unset($_SESSION['success']);
             }
         ?>

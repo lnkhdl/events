@@ -2,11 +2,12 @@
     margin-top: 1em;
     font-size: 1.2rem;
     display: grid;
-    grid-gap: 1em;
-    grid-template-columns: 1em 1fr;
+    grid-template-columns: 2em 1fr;
     grid-template-rows: auto;
     grid-template-areas: 
         "event-name event-name"
+        "success-msg success-msg"
+        "error-msg error-msg"
         "place-img city-text"
         ". address-text"
         "date-img date-text"
@@ -15,22 +16,59 @@
         "description description"
         "members members"
         "delete-form delete-form";
+    @include screen-m {
+        grid-template-columns: 3em 5em 1fr 1fr;
+        grid-template-areas: 
+            "event-name event-name event-name delete-form"
+            "success-msg success-msg success-msg success-msg"
+            "error-msg error-msg error-msg error-msg"
+            "place-img city-text city-text city-text"
+            ". address-text address-text address-text"
+            "date-img date-text date-text date-text"
+            "add-btn add-btn edit-btn edit-btn"
+            "description description description description"
+            "members members members members";
+    }
 
     h2 {
         grid-area: event-name;
         margin: 0;
     }
 
+    .success-msg {
+        grid-area: success-msg;
+        color: $color-msg-success;
+        background-color: $color-msg-success-bg;
+        padding: 0.8em;
+    }
+
+    .error-msg {
+        grid-area: error-msg;
+        color: $color-msg-error;
+        background-color: $color-msg-error-bg;
+        padding: 0.8em;
+    }
+
+
     .place-img {
         grid-area: place-img;
+        margin: 1.2em 0 0.5em 0;
     }
 
     .city {
         grid-area: city-text;
+        margin: 1.2em 0 0.5em 0;
+        @include screen-m {
+            align-self: end;
+        }
     }
 
     .address {
         grid-area: address-text;
+        margin-bottom: 0.8em;
+        @include screen-m {
+            align-self: end;
+        }
     }
 
     .date-img {
@@ -39,19 +77,35 @@
 
     .date {
         grid-area: date-text;
+        margin-bottom: 0.8em;
+        @include screen-m {
+            align-self: end;
+        }
     }
 
     .add-btn {
-        margin-top: 1.5em;
         grid-area: add-btn;
+        margin: 1em 0;
+        @include screen-m {
+            margin-bottom: 0;
+            justify-self: start;
+        }
     }
 
     .edit-btn {
         grid-area: edit-btn;
+        @include screen-m {
+            margin-top: 1em;
+            justify-self: start;
+        }
     }
 
     .delete-form {
         grid-area: delete-form;
+        @include screen-m {
+            justify-self: end;
+            align-self: end;
+        }
     }
 
     .delete-btn {
@@ -63,6 +117,7 @@
         font-size: 1.2rem;
         text-align: justify;
         line-height: 150%;
+        margin: 1.5em 0;
     }
 
     .members-tbl {

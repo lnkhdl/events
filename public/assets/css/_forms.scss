@@ -1,28 +1,40 @@
-@mixin position {
+@mixin general {
     margin-top: 0.2em;
     margin-bottom: 2em;
-    padding-left: 0.8em;
     width: 100%;
+    font-family: $font-family, sans-serif;
+    font-size: 1rem;
 }
 
 .form form input[type=text] {
-    @include position;
+    @include general;
     height: 3em;
+    padding-left: 0.5em;
     border: 1px solid $color-primary;
 }
 
 .form form textarea {
-    @include position;
+    @include general;
     padding-top: 0.5em;
+    padding-left: 0.5em;
     border: 1px solid $color-primary;
 }
 
 .form form input[type=submit] {
-    @include position;
+    @include general;
     margin-bottom: 0.5em;
+    appearance: none;
+    @include screen-l {
+        width: auto;
+    }
 }
 
 .form form label {
     font-weight: 700;
     color: $color-primary;
+}
+
+.form-error {
+    color: red;
+    margin: 0.5em 0;
 }

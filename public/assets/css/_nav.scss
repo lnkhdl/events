@@ -11,6 +11,11 @@
         overflow: hidden;
         transition-property: height;
         transition: all 500ms ease-in-out;
+        @include screen-l {
+            height: 100%;
+            padding-top: 1em;
+            padding-bottom: 1em;
+        }
     }
 
     &.show ul {
@@ -19,16 +24,46 @@
 
     li {
         padding: .5em 0;
+        @include screen-l {
+            display: inline;
+            padding-right: 2em;
+        }
     }
 
     a {
         color: white;
         text-decoration: none;
-        &:hover, &.active {
+        @include screen-l {
+            position: relative;
+            &::after {
+                content: '';
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                height: 0.1em;
+                width: 100%;
+                background: $color-primary;
+                transform: scaleX(0);
+                transform-origin: right;
+                transition: transform 200ms ease-in;
+            }
+        }
+        &:hover {
+            font-weight: 700;
+            color: $color-primary;
+            @include screen-l {
+                position: relative;
+                padding-bottom: 0.1em;
+                &::after {
+                    transform: scaleX(1);
+                    transform-origin: left;
+                }              
+            }
+        }
+        &.active {
             color: $color-primary;
             font-weight: 700;
-            transition: all 300ms linear;
-        }
+        }        
     }
 }
 
@@ -36,6 +71,9 @@
     padding: 1em 0;
     cursor: pointer;
     display: inline-block;
+    @include screen-l {
+        display: none;
+    }
 }
 
 .toggle-icon {
@@ -119,6 +157,10 @@ header {
         color: rgba(255,255,255, 0.9);
         padding-left: 2em;
         padding-right: 2em;
+        @include screen-l {
+            padding-left: 10em;
+            padding-right: 10em;
+        }
     }
 
     .create-btn {

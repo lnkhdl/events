@@ -19,6 +19,7 @@
     text-transform: uppercase;
     font-weight: 700;
     transition: background-color 300ms linear;
+    appearance: none;
 }
 
 .main-btn {
@@ -30,6 +31,9 @@
 
 .add-btn {
     @include button($color-button-add);
+    @include screen-m {
+        font-size: 0.8rem;
+    }
     &:hover {
         background-color: $color-button-add-hover;
     }
@@ -37,6 +41,9 @@
 
 .edit-btn {
     @include button($color-button-edit);
+    @include screen-m {
+        font-size: 0.8rem;
+    }
     &:hover {
         background-color: $color-button-edit-hover;
     }
@@ -44,6 +51,9 @@
 
 .delete-btn {
     @include button($color-button-delete);
+    @include screen-m {
+        font-size: 0.8rem;
+    }
     &:hover {
         background-color: $color-button-delete-hover;
     }

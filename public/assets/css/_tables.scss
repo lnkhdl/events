@@ -1,41 +1,104 @@
 .tbl {
-    > table, tbody, tr, td { 
+    table { 
         display: block;
         width: 100%;
+        @include screen-m {
+            display: table;
+            border: 1px $color-primary solid;
+            background-color: white;
+            border-radius: 0.5em;
+            margin-bottom: 2em;
+            border-spacing: 0;
+            overflow: hidden;
+        }
+        @include screen-m {
+            margin-left: auto;
+            margin-right: auto;
+        }
     }
 
-    thead tr { 
-        display: none;
+    thead { 
+        @include screen-m {
+            display: table-header-group;
+        }
+        tr { 
+            display: none;
+            @include screen-m {
+                display: table-row;
+                background-color: $color-primary;
+                color: white;
+            }
+        }
+        th {
+            @include screen-m {
+                padding: 0.8em;
+                text-align: left;
+            }
+        }
     }
 
-    tr {
-        border: 1px $color-primary solid;
-        background-color: white;
-        overflow: hidden;
-        margin: 1em 0;
-    }
-
-    td { 
-        position: relative;
-        padding: 0.5em 0 0.5em 25%;
-        font-size: 1.2rem;
-    }
+    tbody { 
+        display: block;
+        width: 100%;
+        @include screen-m {
+            display: table-row-group;
+        }
+        tr { 
+            display: block;
+            width: 100%;
+            border: 1px $color-primary solid;
+            background-color: white;
+            overflow: hidden;
+            margin: 1em 0;
+            @include screen-m {
+                display: table-row;
+                box-shadow: none;
+            }
+            &:nth-child(odd) {
+                @include screen-m {
+                    background-color: white;
+                }
+            }
+            &:nth-child(even) {
+                @include screen-m {
+                    background-color: #f6f6f6;
+                }
+            }
+            &:hover {
+                @include screen-m {
+                    background-color: #d6eef2;
+                    transition: background-color 150ms ease-in;
+                }
+            }
+        }
+        td { 
+            display: block;
+            width: 100%;
+            @include screen-m {
+                display: table-cell;
+                font-size: 1rem;
+                width: auto;
+                text-align: left;
+            }
+        }
+    }   
 }
 
 .events-tbl {
-    > table {
+    table {
         margin-bottom: 2em;
     }
 
-    > table, tbody, tr, td { 
-        display: block;
-        width: 100%;
-    }
-
     td {
+        position: relative;
+        padding: 0.5em 0 0.5em 25%;
+        font-size: 1.2rem;
         @include screen-s {
             padding: 0.5em 0;
             text-align: center;
+        }
+        @include screen-m {
+            padding: 0.8em;
         }
     }
 
@@ -45,6 +108,13 @@
         text-decoration: none;
         color: white;
         font-weight: 700;
+        @include screen-m {
+            display: block;
+            width: 100%;
+            text-decoration: none;
+            color: black;
+            font-weight: 400;
+        }
     }
 
     td::before {
@@ -54,6 +124,9 @@
         color: grey;
         text-align: left;
         font-size: 1.2rem;
+        @include screen-m {
+            display: none;
+        }
     }
 
     td:first-child {
@@ -61,12 +134,21 @@
         text-align: center;
         border-bottom: 1px solid $color-background-main;
         background-color: $color-primary;
+        @include screen-m {
+            border-bottom: none;
+            background-color: inherit;
+            text-align: left;
+            padding: 0.8em;
+        }
     }
 
     td:last-child {
         padding-left:0;
         text-align: center;
         border-top: 1px solid $color-background-main;
+        @include screen-m {
+            display: none;
+        }
         a {
             color: $color-primary;
             &:hover {
@@ -77,12 +159,23 @@
 }
 
 .members-tbl {
+    h2 {
+        @include screen-m {
+            padding-bottom: 0.3em;
+        }
+    }
+    
     td, td a {
-        display: block;
-        width: 100%;
+        padding: 0.5em 0;
+        font-size: 1.2rem;
         text-decoration: none;
         color: white;
         font-weight: 700;
+        @include screen-m {
+            font-size: 1rem;
+            font-weight: 400;
+            color: black;
+        }
     }
 
     td:first-child,
@@ -90,13 +183,21 @@
         padding-left: 0;
         text-align: center;
         background-color: $color-primary;
+        @include screen-m {
+            background-color: inherit;
+            text-align: left;
+            padding: 0.8em;
+        }
     }
 
     td:last-child,
     td:nth-last-child(2) {
-        padding-left:0;
+        padding-left: 0;
         text-align: center;
         border-top: 1px solid $color-background-main;
+        @include screen-m {
+            padding-left: 1.5em;
+        }
     }
 
     td:last-child,
@@ -105,14 +206,50 @@
         &:hover {
             color: $color-nav;
         }
+        @include screen-m {
+            color: transparent;
+            &:hover {
+                color: transparent;
+            }
+        }
+    }
+
+    .member-edit-icon {       
+        @include screen-m {
+            background: url('/../assets/img/icon_edit.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;   
+            height: 16px;
+            width: 16px;
+            display: block;
+        }
     }
 
     .member-delete-btn {
         color: $color-primary;
-        background-color: white;
+        background-color: transparent;
         font-weight: 700;
         &:hover {
             color: $color-nav;
+        }
+        @include screen-m {
+            color: transparent;
+            &:hover {
+                color: transparent;
+            }
+        }
+    }
+
+    .member-delete-icon {      
+        @include screen-m {
+            background: url('/../assets/img/icon_delete.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;   
+            height: 16px;
+            width: 16px;
+            display: block;
         }
     }
 }

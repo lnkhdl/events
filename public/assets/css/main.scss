@@ -22,8 +22,15 @@
     }
 }
 
+@mixin screen-xxl {
+    @media screen and (min-width: 1600px) {
+        @content;
+    }
+}
+
 
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+$font-family: 'Montserrat';
 
 @import "./colors";
 @import "./buttons";
@@ -46,7 +53,7 @@ html {
 body {
     background-color: $color-background;
     margin: 0;
-    font-family: 'Montserrat', sans-serif;
+    font-family: $font-family, sans-serif;
     font-weight: 400;
     height: 100%;
 }
@@ -56,6 +63,12 @@ body {
     display: flex;
     flex-flow: column;
     height: 100%;
+    @include screen-xl {
+        padding: 0 10% 0 10%;
+    }
+    @include screen-xxl {
+        padding: 0 15% 0 15%;
+    }
 }
 
 header {
@@ -66,6 +79,10 @@ main {
     flex: 1 1 auto;
     background-color: $color-background-main;
     padding: 3%;
+    @include screen-l {
+        padding-left: 5%;
+        padding-right: 5%;
+    }
 }
 
 footer {
@@ -87,4 +104,24 @@ h4 {
     margin: 0.5em 0;
     font-size: 1rem;
     color: $color-primary;
+}
+
+.note {
+    font-size: 0.8rem;
+    color: grey;
+    margin-top: 0;
+}
+
+.success-msg {
+    color: $color-msg-success;
+    background-color: $color-msg-success-bg;
+    margin: 1em 0;
+    padding: 0.8em;
+}
+
+.error-msg {
+    color: $color-msg-error;
+    background-color: $color-msg-error-bg;
+    margin: 1em 0;
+    padding: 0.8em;
 }
