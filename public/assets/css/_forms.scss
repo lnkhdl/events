@@ -1,4 +1,5 @@
 @mixin general {
+    display: block;
     margin-top: 0.2em;
     margin-bottom: 2em;
     width: 100%;
@@ -6,11 +7,17 @@
     font-size: 1rem;
 }
 
-.form form input[type=text] {
+.form form input[type=text],
+.form form input[type=datetime-local] {
     @include general;
     height: 3em;
     padding-left: 0.5em;
     border: 1px solid $color-primary;
+}
+
+.form form input[type=datetime-local] {
+    width: auto;
+    background-color: white;
 }
 
 .form form textarea {

@@ -18,13 +18,13 @@ abstract class Service
 
     public function convertDateToDbFormat(string $date): ?string
     {
-        $dateFromString = date_create_from_format('d-m-Y H:i', $date);
+        $dateFromString = date_create_from_format('Y-m-d\TH:i', $date);
         return date_format($dateFromString, 'Y-m-d H:i:s');
     }
 
     public function convertDateToFormFormat(string $date): ?string
     {
         $dateFromString = date_create_from_format('Y-m-d H:i:s', $date);
-        return date_format($dateFromString, 'd-m-Y H:i');
+        return date_format($dateFromString, 'Y-m-d\TH:i');
     }
 }

@@ -22,9 +22,9 @@
       <?= (isset($errors['address'])) ? ('<div class="form-error">' . str_replace('|', '<br>', $errors['address'])) . '</div>' : ''; ?>
       <input type="text" name="address" value="<?= (isset($data['address'])) ? $data['address'] : ''; ?>">
 
-      <label for="date">Date and time of the event (for example 31-01-2000 14:00) *</label>
+      <label for="date">Date and time of the event *</label>
       <?= (isset($errors['date'])) ? ('<div class="form-error">' . str_replace('|', '<br>', $errors['date'])) . '</div>' : ''; ?>
-      <input type="text" name="date" value="<?= (isset($data['date'])) ? $data['date'] : ''; ?>">
+      <input type="datetime-local" name="date" value="<?= (isset($data['date'])) ? $data['date'] : ''; ?>">
 
       <label for="description">Description</label>
       <?= (isset($errors['description'])) ? ('<div class="form-error">' . str_replace('|', '<br>', $errors['description'])) . '</div>' : ''; ?>

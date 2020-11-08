@@ -12,7 +12,7 @@ class API04_UpdateEventsCest
             'name' => 'Test_API_01 UP',
             'city' => 'Test city UP',
             'address' => 'Test address UP',
-            'date' => '02-11-2021 08:30',
+            'date' => '2021-11-02T08:30',
             'description' => 'This is a test description. UP'
         ]);
 
@@ -49,7 +49,7 @@ class API04_UpdateEventsCest
             'name' => 'Test_API_02 UP2',
             'city' => 'Test city UP2',
             'address' => 'Test address UP2',
-            'date' => '01-05-2019 23:59',
+            'date' => '2019-05-01T23:59',
             'description' => ''
         ]);
 
@@ -86,7 +86,7 @@ class API04_UpdateEventsCest
             'name' => 'Test_API_01 UP',
             'city' => 'Test city UP',
             'address' => 'Test address UP',
-            'date' => '02-11-2021 08:30',
+            'date' => '2021-11-02T08:30',
             'description' => 'This is a test description. UP'
         ]);
 
@@ -102,7 +102,7 @@ class API04_UpdateEventsCest
             'name' => 'Test_API_01 UP',
             'city' => 'Test city',
             'address' => 'Test address',
-            'date' => '01-12-2020 14:30',
+            'date' => '2020-12-01T14:30',
             'description' => 'This is a test description.'
         ]);
 
@@ -117,7 +117,7 @@ class API04_UpdateEventsCest
         $I->sendPUT('event/' . API::$eventId1, [
             'city' => 'Test city UP',
             'address' => 'Test address UP',
-            'date' => '02-11-2021 08:30',
+            'date' => '2021-11-02T08:30',
             'description' => ''
         ]);
 
@@ -132,7 +132,7 @@ class API04_UpdateEventsCest
         $I->sendPUT('event/' . API::$eventId1, [
             'name' => 'Test_API_01 UP',
             'address' => 'Test address UP',
-            'date' => '02-11-2021 08:30',
+            'date' => '2021-02-11T08:30',
             'description' => ''
           ]);
 
@@ -147,7 +147,7 @@ class API04_UpdateEventsCest
         $I->sendPUT('event/' . API::$eventId1, [
             'name' => 'Test_API_01 UP',
             'city' => 'Test city UP',
-            'date' => '02-11-2021 08:30',
+            'date' => '2021-02-11T08:30',
             'description' => ''
           ]);
 
@@ -184,6 +184,6 @@ class API04_UpdateEventsCest
 
         $I->seeResponseCodeIs(400);
         $I->seeResponseIsJson();
-        $I->seeResponseEquals('{"error":{"name":"The field \'name\' is required.|The field \'name\' is too short. Minimum length is \'2\'.","city":"The field \'city\' is required.","address":"The field \'address\' is required.","date":"The field \'date\' is required.|The field \'date\' is not a valid datetime. Required format is DD-MM-YYYY HH:MM.","description":""}}');
+        $I->seeResponseEquals('{"error":{"name":"The field \'name\' is required.|The field \'name\' is too short. Minimum length is \'2\'.","city":"The field \'city\' is required.","address":"The field \'address\' is required.","date":"The field \'date\' is required.|The field \'date\' is not a valid datetime.","description":""}}');
     }
 }

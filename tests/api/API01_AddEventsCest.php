@@ -12,7 +12,7 @@ class API01_AddEventsCest
           'name' => 'Test_API_01',
           'city' => 'Test city',
           'address' => 'Test address',
-          'date' => '01-12-2020 14:30',
+          'date' => '2020-12-01T14:30',
           'description' => 'This is a test description.'
         ]);
 
@@ -51,7 +51,7 @@ class API01_AddEventsCest
           'name' => 'Test_API_02',
           'city' => 'Test city',
           'address' => 'Test address',
-          'date' => '31-01-2020 08:30',
+          'date' => '2020-01-31T08:30',
           'description' => ''
         ]);
 
@@ -90,7 +90,7 @@ class API01_AddEventsCest
             'name' => 'Test_API_01',
             'city' => 'Test city',
             'address' => 'Test address',
-            'date' => '01-12-2020 14:30',
+            'date' => '2020-12-01T14:30',
             'description' => 'This is a test description.'
         ]);
 
@@ -105,7 +105,7 @@ class API01_AddEventsCest
         $I->sendPOST('event/add', [
           'city' => 'Test city',
           'address' => 'Test address',
-          'date' => '31-01-2020 08:30',
+          'date' => '2020-01-31T08:30',
           'description' => ''
         ]);
 
@@ -120,7 +120,7 @@ class API01_AddEventsCest
         $I->sendPOST('event/add', [
             'name' => 'Test_API_01',
             'address' => 'Test address',
-            'date' => '01-12-2020 14:30',
+            'date' => '2020-12-01T14:30',
             'description' => ''
         ]);
 
@@ -135,7 +135,7 @@ class API01_AddEventsCest
         $I->sendPOST('event/add', [
             'name' => 'Test_API_01',
             'city' => 'Test city',
-            'date' => '01-12-2020 14:30',
+            'date' => '2020-12-01T14:30',
             'description' => ''
         ]);
 
@@ -172,6 +172,6 @@ class API01_AddEventsCest
 
         $I->seeResponseCodeIs(400);
         $I->seeResponseIsJson();
-        $I->seeResponseEquals('{"error":{"name":"The field \'name\' is required.|The field \'name\' is too short. Minimum length is \'2\'.","city":"The field \'city\' is required.","address":"The field \'address\' is required.","date":"The field \'date\' is required.|The field \'date\' is not a valid datetime. Required format is DD-MM-YYYY HH:MM.","description":""}}');
+        $I->seeResponseEquals('{"error":{"name":"The field \'name\' is required.|The field \'name\' is too short. Minimum length is \'2\'.","city":"The field \'city\' is required.","address":"The field \'address\' is required.","date":"The field \'date\' is required.|The field \'date\' is not a valid datetime.","description":""}}');
     }
 }

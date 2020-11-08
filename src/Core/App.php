@@ -6,10 +6,12 @@ use App\Core\Routing\{
     RouteFactory, 
     Router, 
     Request\RequestFactory,
-    Response\Response
+    Response\Response,
+    Route
 };
 use App\Controllers\ControllerValidator;
 use App\Model\Service\ServiceFactory;
+use Error;
 use Exception;
 
 class App

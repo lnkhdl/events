@@ -652,7 +652,9 @@ header .create-btn {
   cursor: pointer;
 }
 
-.form form input[type=text] {
+.form form input[type=text],
+.form form input[type=datetime-local] {
+  display: block;
   margin-top: 0.2em;
   margin-bottom: 2em;
   width: 100%;
@@ -663,7 +665,13 @@ header .create-btn {
   border: 1px solid #033E68;
 }
 
+.form form input[type=datetime-local] {
+  width: auto;
+  background-color: white;
+}
+
 .form form textarea {
+  display: block;
   margin-top: 0.2em;
   margin-bottom: 2em;
   width: 100%;
@@ -675,6 +683,7 @@ header .create-btn {
 }
 
 .form form input[type=submit] {
+  display: block;
   margin-top: 0.2em;
   margin-bottom: 2em;
   width: 100%;

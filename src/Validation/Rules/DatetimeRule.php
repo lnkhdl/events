@@ -6,20 +6,19 @@ use DateTime;
 
 class DatetimeRule extends Rule
 {
-    private $dateTimeFormatUser = 'DD-MM-YYYY HH:MM';
-    private $dateTimeFormat = 'd-m-Y H:i';
+    private $htmlDateTimeFormat = 'Y-m-d\TH:i';
 
     public function setError(): void
     {
-        $this->errorMessage = "The field ':name' is not a valid datetime. Required format is {$this->dateTimeFormatUser}.";
+        $this->errorMessage = "The field ':name' is not a valid datetime.";
     }
 
     public function isValid(): bool
     {
         if ($this->value) {
-            $dateTime = DateTime::createFromFormat($this->dateTimeFormat, $this->value);
+            $dateTime = DateTime::createFromFormat($this->htmlDateTimeFormat, $this->value);
 
-            if ($dateTime instanceof DateTime && $dateTime->format($this->dateTimeFormat) == $this->value) {
+            if ($dateTime instanceof DateTime && $dateTime->format($this->htmlDateTimeFormat) == $this->value) {
                 return true;
             }
         }
