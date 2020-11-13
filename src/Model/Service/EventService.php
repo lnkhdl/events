@@ -30,6 +30,11 @@ class EventService extends Service
         return $this->mapper->fetchAll();
     }
 
+    public function getLatestEvents(): array
+    {
+        return $this->mapper->fetchLatest(8);
+    }
+
     public function saveEvent(array $data): void
     {
         if ($this->mapper->doesEventNameExist($data['name']) === 0) {

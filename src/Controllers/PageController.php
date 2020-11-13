@@ -5,11 +5,6 @@ namespace App\Controllers;
 
 class PageController extends Controller
 {
-    public function about()
-    {
-        return $this->response->render('about');
-    }
-
     public function contact()
     {
         return $this->response->render('contact');

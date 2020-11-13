@@ -14,7 +14,7 @@
   font-size: 1rem;
   text-align: center;
   text-decoration: none;
-  border-radius: .8em;
+  border-radius: 0.8em;
   padding: 0.7em 1em;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -30,6 +30,48 @@
   background-color: #2CD1CA;
 }
 
+.create-btn {
+  background-color: #77C9D4;
+  border: 2px solid #77C9D4;
+  color: white;
+  font-size: 1rem;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 0.8em;
+  padding: 0.7em 1em;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 700;
+  -webkit-transition: background-color 300ms linear;
+  transition: background-color 300ms linear;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  display: inline-block;
+  border-bottom: none;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  margin-top: 1em;
+  border-color: #f9f9f9;
+}
+
+.create-btn:hover {
+  background-color: #2CD1CA;
+}
+
+.show-btn {
+  display: block;
+  margin: 1em 0;
+}
+
+@media screen and (min-width: 768px) {
+  .show-btn {
+    width: auto;
+    display: inline-block;
+    margin: 0;
+  }
+}
+
 .add-btn {
   background-color: #296A99;
   border: 2px solid #296A99;
@@ -37,7 +79,7 @@
   font-size: 1rem;
   text-align: center;
   text-decoration: none;
-  border-radius: .8em;
+  border-radius: 0.8em;
   padding: 0.7em 1em;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -49,14 +91,14 @@
           appearance: none;
 }
 
+.add-btn:hover {
+  background-color: #77C9D4;
+}
+
 @media screen and (min-width: 768px) {
   .add-btn {
     font-size: 0.8rem;
   }
-}
-
-.add-btn:hover {
-  background-color: #77C9D4;
 }
 
 .edit-btn {
@@ -66,7 +108,7 @@
   font-size: 1rem;
   text-align: center;
   text-decoration: none;
-  border-radius: .8em;
+  border-radius: 0.8em;
   padding: 0.7em 1em;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -78,14 +120,14 @@
           appearance: none;
 }
 
+.edit-btn:hover {
+  background-color: #CCCC73;
+}
+
 @media screen and (min-width: 768px) {
   .edit-btn {
     font-size: 0.8rem;
   }
-}
-
-.edit-btn:hover {
-  background-color: #CCCC73;
 }
 
 .delete-btn {
@@ -95,7 +137,7 @@
   font-size: 1rem;
   text-align: center;
   text-decoration: none;
-  border-radius: .8em;
+  border-radius: 0.8em;
   padding: 0.7em 1em;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -107,14 +149,14 @@
           appearance: none;
 }
 
+.delete-btn:hover {
+  background-color: #ED899D;
+}
+
 @media screen and (min-width: 768px) {
   .delete-btn {
     font-size: 0.8rem;
   }
-}
-
-.delete-btn:hover {
-  background-color: #ED899D;
 }
 
 .top-nav {
@@ -179,16 +221,16 @@
             transform: scaleX(0);
     -webkit-transform-origin: right;
             transform-origin: right;
-    -webkit-transition: -webkit-transform 200ms ease-in;
-    transition: -webkit-transform 200ms ease-in;
-    transition: transform 200ms ease-in;
-    transition: transform 200ms ease-in, -webkit-transform 200ms ease-in;
+    -webkit-transition: -webkit-transform 300ms ease-in;
+    transition: -webkit-transform 300ms ease-in;
+    transition: transform 300ms ease-in;
+    transition: transform 300ms ease-in, -webkit-transform 300ms ease-in;
   }
 }
 
 .top-nav a:hover {
-  font-weight: 700;
   color: #033E68;
+  font-weight: 700;
 }
 
 @media screen and (min-width: 960px) {
@@ -311,6 +353,9 @@ header p {
   color: rgba(255, 255, 255, 0.9);
   padding-left: 2em;
   padding-right: 2em;
+  font-size: 1rem;
+  text-align: center;
+  line-height: 100%;
 }
 
 @media screen and (min-width: 960px) {
@@ -318,15 +363,6 @@ header p {
     padding-left: 10em;
     padding-right: 10em;
   }
-}
-
-header .create-btn {
-  display: inline-block;
-  border-bottom: none;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-  margin-top: 1em;
-  border-color: #f9f9f9;
 }
 
 .tbl table {
@@ -641,7 +677,8 @@ header .create-btn {
     background: url("/../assets/img/icon_delete.png");
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: center center;
+    background-position-x: 50%;
+    background-position-y: 0%;
     height: 16px;
     width: 16px;
     display: block;
@@ -874,9 +911,6 @@ header .create-btn {
   -ms-grid-column: 1;
   -ms-grid-column-span: 2;
   grid-area: description;
-  font-size: 1.2rem;
-  text-align: justify;
-  line-height: 150%;
   margin: 1.5em 0;
 }
 
@@ -975,6 +1009,12 @@ h4 {
   color: #033E68;
 }
 
+p {
+  font-size: 1.2rem;
+  text-align: justify;
+  line-height: 150%;
+}
+
 .note {
   font-size: 0.8rem;
   color: grey;
@@ -984,6 +1024,7 @@ h4 {
 .success-msg {
   color: #4F8A10;
   background-color: #DFF2BF;
+  border: 1px solid #4F8A10;
   margin: 1em 0;
   padding: 0.8em;
 }
@@ -991,6 +1032,7 @@ h4 {
 .error-msg {
   color: #D8000C;
   background-color: #FFD2D2;
+  border: 1px solid #D8000C;
   margin: 1em 0;
   padding: 0.8em;
 }

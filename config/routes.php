@@ -3,10 +3,8 @@
 return [
     'get|/|EventController|index',
     'get|/index|EventController|index',
-    'get|/about|PageController|about',
     'get|/contact|PageController|contact',
-
-    'get|/events|EventController|index',
+    'get|/events|EventController|listAll',
     'get|/event/{int}|EventController|show',
     'get|/event/create|EventController|create',
     'post|/event/add|EventController|add',
@@ -22,7 +20,8 @@ return [
 
     'get|/test/{int}/{string}|PageController|test',
 
-    'get|/api/events|EventController|index',
+    'get|/api/latest-events|EventController|index',
+    'get|/api/events|EventController|listAll',
     'get|/api/event/{int}|EventController|show',
     'post|/api/event/add|EventController|add',
     'put|/api/event/{int}|EventController|update',

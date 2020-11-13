@@ -18,7 +18,7 @@
                 echo '<h2 style="text-align: center">Sorry, there are currently no events.</h2>';
             } else {
                 ?>
-                <h2>Latest Events</h2>
+                <h2>All Events</h2>
                     <table>
                         <thead>
                             <tr>
@@ -38,15 +38,11 @@
                                         <td data-label="Date"><?= $event['date'] ?></td>
                                         <td><a href="<?= '/event/' . $event['id'] ?>">Show more</a></td>
                                     </tr>
-                            <?php
+                                <?php
                             }
-                            ?>
-                        </tbody>
-                    </table>
-                    <a href="/events" class="main-btn show-btn">Show all events</a>
-                <?php
-                }
-                ?>            
+            } ?>
+                </tbody>
+            </table>
     </section>
 </main>
 

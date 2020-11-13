@@ -26,9 +26,16 @@ class EventController extends Controller
 
     public function index()
     {
-        $events = $this->eventService->getAllEvents();
+        $events = $this->eventService->getLatestEvents();
         // If no events found, view template will handle it
         return $this->response->render('events/index', $events);  
+    }
+
+    public function listAll()
+    {
+        $events = $this->eventService->getAllEvents();
+        // If no events found, view template will handle it
+        return $this->response->render('events/all', $events);  
     }
 
 

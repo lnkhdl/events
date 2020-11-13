@@ -38,6 +38,16 @@ class DbEventEntityCest
     }
 
 
+    public function false_is_returned_when_fetching_latest_on_empty_table(IntegrationTester $I)
+    {
+        $mapper = $I->createMapper('EventMapper');
+        $result = $mapper->fetchLatest(10);
+
+        $I->assertIsArray($result);
+        $I->assertEmpty($result);
+    }
+
+
     public function event1_is_inserted(IntegrationTester $I)
     {
         $mapper = $I->createMapper('EventMapper');
@@ -88,6 +98,42 @@ class DbEventEntityCest
     {
         $mapper = $I->createMapper('EventMapper');
         $result = $mapper->fetchAll();
+        $expectedEntity1 = $this->getTestEntity1();
+        $expectedEntity2 = $this->getTestEntity2();
+
+        $I->assertIsArray($result);
+        $I->assertSame(count($result), 2);
+
+        $I->assertInstanceOf(get_class($expectedEntity1), $result[0]);
+        $I->assertSame('1', $result[0]->getId());
+        $I->assertSame($expectedEntity1->getName(), $result[0]->getName());
+        $I->assertSame($expectedEntity1->getCity(), $result[0]->getCity());
+        $I->assertSame($expectedEntity1->getAddress(), $result[0]->getAddress());
+        $I->assertSame($expectedEntity1->getDate(), $result[0]->getDate());
+        $I->assertSame($expectedEntity1->getDescription(), $result[0]->getDescription());
+        $I->assertSame(date('Y-m-d'), date_format(date_create_from_format('Y-m-d H:i:s', $result[0]->getCreatedAt()), 'Y-m-d'));
+        $I->assertSame(date('Y-m-d'), date_format(date_create_from_format('Y-m-d H:i:s', $result[0]->getUpdatedAt()), 'Y-m-d'));
+
+        $I->assertInstanceOf(get_class($expectedEntity2), $result[1]);
+        $I->assertSame('2', $result[1]->getId());
+        $I->assertSame($expectedEntity2->getName(), $result[1]->getName());
+        $I->assertSame($expectedEntity2->getCity(), $result[1]->getCity());
+        $I->assertSame($expectedEntity2->getAddress(), $result[1]->getAddress());
+        $I->assertSame($expectedEntity2->getDate(), $result[1]->getDate());
+        $I->assertSame($expectedEntity2->getDescription(), $result[1]->getDescription());
+        $I->assertSame(date('Y-m-d'), date_format(date_create_from_format('Y-m-d H:i:s', $result[1]->getCreatedAt()), 'Y-m-d'));
+        $I->assertSame(date('Y-m-d'), date_format(date_create_from_format('Y-m-d H:i:s', $result[1]->getUpdatedAt()), 'Y-m-d'));
+    }
+    
+
+    /**
+     * @depends event1_is_inserted
+     * @depends event2_is_inserted
+     */
+    public function events_are_returned_when_fetching_latest(IntegrationTester $I)
+    {
+        $mapper = $I->createMapper('EventMapper');
+        $result = $mapper->fetchLatest(2);
         $expectedEntity1 = $this->getTestEntity1();
         $expectedEntity2 = $this->getTestEntity2();
 

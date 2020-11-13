@@ -106,6 +106,12 @@ h4 {
     color: $color-primary;
 }
 
+p {
+    font-size: 1.2rem;
+    text-align: justify;
+    line-height: 150%;
+}
+
 .note {
     font-size: 0.8rem;
     color: grey;
@@ -115,6 +121,7 @@ h4 {
 .success-msg {
     color: $color-msg-success;
     background-color: $color-msg-success-bg;
+    border: 1px solid $color-msg-success;
     margin: 1em 0;
     padding: 0.8em;
 }
@@ -122,6 +129,7 @@ h4 {
 .error-msg {
     color: $color-msg-error;
     background-color: $color-msg-error-bg;
+    border: 1px solid $color-msg-error;
     margin: 1em 0;
     padding: 0.8em;
 }

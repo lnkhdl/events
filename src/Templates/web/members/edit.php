@@ -25,7 +25,7 @@
       <input type="hidden" name="id" value="<?= $data['id']?>">
       <input type="hidden" name="event_id" value="<?= $data['event_id']?>">
       <input type="hidden" name="_method" value="put">
-      <input class="main-btn" type="submit" value="Submit">
+      <input class="main-btn" type="submit" value="Update member">
       <p class="note">* indicates a required field</p>
     </form>
   </section>

@@ -46,6 +46,15 @@ class EventMapper extends Mapper
         return $stmt->fetchAll(PDO::FETCH_CLASS, 'App\Model\Entity\EventEntity');    
     }
 
+    public function fetchLatest(int $count): array
+    {
+        $sql = 'SELECT * FROM event ORDER BY created_at DESC LIMIT :count';
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindValue(':count', $count, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_CLASS, 'App\Model\Entity\EventEntity');    
+    }
+
     public function insert(array $data): int
     {
         $sql = "INSERT INTO event (name, city, address, date, description)
