@@ -10,15 +10,15 @@
     <?= (isset($errors['error'])) ? '<div class="error-msg">' . $errors['error'] . '</div>' : ''; ?>
 
     <form action="<?= '/event/' . $data['event_id'] . '/member/add'?>" method="post" name="createMemberForm">
-      <label for="name">First name *</label>
+      <label for="firstname">First name *</label>
       <?= (isset($errors['first_name'])) ? ('<div class="form-error">' . str_replace('|', '<br>', $errors['first_name'])) . '</div>' : ''; ?>
       <input type="text" name="first_name" value="<?= (isset($data['first_name'])) ? $data['first_name'] : ''; ?>">
 
-      <label for="name">Last name *</label>
+      <label for="lastname">Last name *</label>
       <?= (isset($errors['last_name'])) ? ('<div class="form-error">' . str_replace('|', '<br>', $errors['last_name'])) . '</div>' : ''; ?>
       <input type="text" name="last_name" value="<?= (isset($data['last_name'])) ? $data['last_name'] : ''; ?>">
 
-      <label for="name">Email *</label>
+      <label for="email">Email *</label>
       <?= (isset($errors['email'])) ? ('<div class="form-error">' . str_replace('|', '<br>', $errors['email'])) . '</div>' : ''; ?>
       <input type="text" name="email" value="<?= (isset($data['email'])) ? $data['email'] : ''; ?>">
 

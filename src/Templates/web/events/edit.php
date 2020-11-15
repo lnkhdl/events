@@ -9,7 +9,7 @@
 
     <?= (isset($errors['error'])) ? '<div class="error-msg">' . $errors['error'] . '</div>' : ''; ?>
 
-    <form action="<?= '/event/'  . $data['id']?>" method="post">
+    <form action="<?= '/event/'  . $data['id']?>" method="post" name="editEventForm">
       <label for="name">Event name *</label>
       <?= (isset($errors['name'])) ? ('<div class="form-error">' . str_replace('|', '<br>', $errors['name'])) . '</div>' : ''; ?>
       <input type="text" name="name" value="<?= (isset($data['name'])) ? $data['name'] : ''; ?>">

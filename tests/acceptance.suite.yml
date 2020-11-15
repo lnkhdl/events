@@ -10,4 +10,14 @@ modules:
         - PhpBrowser:
             url: http://event.test/
         - \Helper\Acceptance
+        - Db
+    config:
+        Db:
+            dsn: 'mysql:host=localhost;dbname=php_events_tests'
+            user: 'root'
+            password: ''
+            reconnect: false
+            dump: 'tests/_data/test_db_dump.sql'
+            populate: true
+            cleanup: false
     step_decorators: ~        

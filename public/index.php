@@ -3,7 +3,7 @@ $env_options = ['DEV', 'TEST', 'PRODUCTION'];
 
 
 /* SET THE ENVIRONMENT HERE */
-$env = $env_options[0];
+$env = $env_options[1];
 /* ----------------------- */
 
 
