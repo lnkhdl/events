@@ -17,9 +17,6 @@ This is my first project in PHP. It was created for learning purpose only. There
 1. Change `$env` variable in `index.php` file that is located in `public` folder to the required environment type based on the `$env_options`.
 
 ### Screenshots
-![Home page - large](preview_01_large.png "Home page - large]")
-![Home page - medium](preview_01_medium.png "Home page - medium]")
-![Home page - small](preview_01_small.png "Home page - small]")
-![Single event page - large](preview_02_large.png "Single event page - large]")
-![Single event page - medium](preview_02_medium.png "Single event page - medium]")
-![Single event page - small](preview_02_small.png "Single event page - small]")
+Screenshots of Home page and Single event page are saved in `_screenshots` folder.
+![Home page - large](/_screenshots/preview_01_large.png "Home page - large]")
+![Single event page - large](/_screenshots/preview_02_large.png "Single event page - large]")
