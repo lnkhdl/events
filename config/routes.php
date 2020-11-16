@@ -1,5 +1,7 @@
 <?php
 
+// example: 'get|/test/{int}/{string}|PageController|test'
+
 return [
     'get|/|EventController|index',
     'get|/index|EventController|index',
@@ -17,8 +19,6 @@ return [
     'get|/event/{int}/member/{int}/edit|MemberController|edit',
     'put|/event/{int}/member/{int}|MemberController|update',
     'delete|/event/{int}/member/{int}|MemberController|destroy',
-
-    'get|/test/{int}/{string}|PageController|test',
 
     'get|/api/latest-events|EventController|index',
     'get|/api/events|EventController|listAll',

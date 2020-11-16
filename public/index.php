@@ -15,6 +15,10 @@ if ($env === 'DEV') {
     ini_set('display_startup_errors', 0);
 }
 
+if ($env === 'TEST') {
+    include __DIR__ . '/../c3.php';
+}
+
 error_reporting(E_ALL);
 require_once __DIR__ . '/../config/reporting_handler.php';
 

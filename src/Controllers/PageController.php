@@ -9,11 +9,4 @@ class PageController extends Controller
     {
         return $this->response->render('contact');
     }
-
-    public function test(int $id, string $name)
-    {
-        echo "Test page<br>";
-        echo "ID: " . $id . "<br>";
-        echo "Name: " . $name . "<br";
-    }
 }

@@ -179,4 +179,13 @@ class API07_AddMembersCest
         $I->seeResponseIsJson();
         $I->seeResponseEquals('{"error":{"first_name":"The field \'first_name\' is required.|The field \'first_name\' is too short. Minimum length is \'2\'.","last_name":"The field \'last_name\' is required.|The field \'last_name\' is too short. Minimum length is \'2\'.","email":"The field \'email\' is required.|The field \'email\' is not a valid email address."}}');
     }
+
+    public function correct_message_returned_when_adding_member_to_nonexisting_event(ApiTester $I)
+    {
+        $I->haveHttpHeader('Content-Type', 'application/json');
+        $I->sendGET('event/0/member/create');
+        $I->seeResponseCodeIs(404);
+        $I->seeResponseIsJson();
+        $I->seeResponseEquals('{"message":"Error 404 - The requested resource was not found."}');
+    }
 }

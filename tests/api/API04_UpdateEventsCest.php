@@ -186,4 +186,13 @@ class API04_UpdateEventsCest
         $I->seeResponseIsJson();
         $I->seeResponseEquals('{"error":{"name":"The field \'name\' is required.|The field \'name\' is too short. Minimum length is \'2\'.","city":"The field \'city\' is required.","address":"The field \'address\' is required.","date":"The field \'date\' is required.|The field \'date\' is not a valid datetime.","description":""}}');
     }
+
+    public function correct_message_returned_when_editing_nonexisting_event(ApiTester $I)
+    {
+        $I->haveHttpHeader('Content-Type', 'application/json');
+        $I->sendGET('event/0/edit');
+        $I->seeResponseCodeIs(404);
+        $I->seeResponseIsJson();
+        $I->seeResponseEquals('{"message":"Error 404 - The requested resource was not found."}');
+    }
 }

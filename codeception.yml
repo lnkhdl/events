@@ -14,5 +14,5 @@ coverage:
         - src/*
     exclude:
         - src/Core/App.php
-        - src/Controllers/*Controller.php
-        - src/Templates/*
+        - src/Templates/api/*
+        - src/Templates/web/errors/*

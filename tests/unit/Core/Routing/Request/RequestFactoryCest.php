@@ -79,4 +79,14 @@ class RequestFactoryCest
             $request = $requestFactory->create();
         });
     }
+
+    public function empty_post_data_in_post_request_throws_exception(UnitTester $I)
+    {
+        $I->expectThrowable(new Exception('Cannot read POST/PUT data.', 400), function() {
+            $_SERVER['REQUEST_METHOD'] = 'POST';
+            $_POST = null;
+            $requestFactory = new RequestFactory;
+            $request = $requestFactory->create();
+        });
+    }
 }
